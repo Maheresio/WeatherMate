@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weather_mate/features/auth/presentation/view/login/login_view.dart';
 import 'package:weather_mate/features/auth/presentation/view/register/register_view.dart';
 
-import '../helpers/vertical_transition.dart';
+import '../helpers/vertical_and_horizontal_transitions.dart';
 
 abstract class AppRouter {
   static const kLogin = '/loginView';
@@ -20,21 +20,29 @@ abstract class AppRouter {
       GoRoute(
         path: kRegister,
         pageBuilder: (BuildContext context, GoRouterState state) {
-          return verticalTransition(
-            state,
-            dy: -1.0,
-            child: RegisterView(),
-          );
+          return MediaQuery.sizeOf(context).width < 1400
+              ? verticalTransition(
+                  state,
+                  dy: -1.0,
+                  child: RegisterView(),
+                )
+              : horizontalTransition(
+                  state,
+                  child: RegisterView(),
+                  dx: -1.0,
+                );
         },
       ),
       GoRoute(
         path: kLogin,
         pageBuilder: (BuildContext context, GoRouterState state) {
-          return verticalTransition(
-            state,
-            dy: 1.0,
-            child: LoginView(),
-          );
+          return MediaQuery.sizeOf(context).width < 1400
+              ? verticalTransition(
+                  state,
+                  dy: 1.0,
+                  child: LoginView(),
+                )
+              : horizontalTransition(state, child: LoginView(), dx: 1.0,);
         },
       ),
     ],
