@@ -3,28 +3,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'core/helpers/firebase_init.dart';
 import 'core/helpers/styled_status_bar.dart';
 import 'core/utils/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   styledStatusBar();
-
+  await firebaseInit();
   runApp(
     DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              child: MaterialApp.router(
-                locale: DevicePreview.locale(context),
-                builder: DevicePreview.appBuilder,
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData.light().copyWith(
-                  textTheme: GoogleFonts.poppinsTextTheme(),
-                ),
-                routerConfig: AppRouter.router,
-              ),
-            )), // Wrap your app
+      enabled: !kReleaseMode,
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: MaterialApp.router(
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light().copyWith(
+            textTheme: GoogleFonts.poppinsTextTheme(),
+          ),
+          routerConfig: AppRouter.router,
+        ),
+      ),
+    ),
   );
 }

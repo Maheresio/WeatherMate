@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575317137829",
+    "project_id": "weathermate-9164c",
+    "storage_bucket": "weathermate-9164c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575317137829:android:8f84828136917e86e6f04c",
+        "android_client_info": {
+          "package_name": "com.example.weather_mate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM4JbzJ4jNwKqAGzcAEAsbeSnW47NcGs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
