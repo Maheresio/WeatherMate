@@ -14,22 +14,23 @@ class StyledIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 50,
-      height: 50,
+      width: 60,
+      height: 60,
       child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.radius10),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.radius10),
+          ),
+          backgroundColor: Colors.white,
+          padding: EdgeInsets.zero,
         ),
-        backgroundColor: Colors.white,
-        padding: EdgeInsets.zero,
-      ),
-      onPressed: onPressed,
-      child: SvgPicture.asset(
-        image,
-        width: 24,
-        height: 24,
-      ),
+        onPressed: onPressed,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: SvgPicture.asset(
+            image,
+          ),
+        ),
       ),
     );
   }

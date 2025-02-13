@@ -1,8 +1,10 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppConstants {
-  static final radius10 = 10.0.r;
-  static final radius100 = 100.0.r;
+  static final double radius200 = 200.0;
 
-  static final heightSize10 = 10.0.h;
+  static final double radius5 = 5.0;
+  static final double radius10 = 10.0;
+  static final double radius100 = 100.0;
+
+  
 }

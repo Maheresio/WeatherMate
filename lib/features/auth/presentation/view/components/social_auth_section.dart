@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather_mate/core/utils/app_constants.dart';
 
 import '../../../../../core/utils/app_images.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
 import 'styled_icon_button.dart';
 
-class SocialLoginSection extends StatelessWidget {
-  const SocialLoginSection({super.key});
+class SocialAuthSection extends StatelessWidget {
+  const SocialAuthSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: AppConstants.heightSize10,
+      spacing: 15,
       children: [
         Text(
           AppStrings.loginWithSocialPlatforms,
-          style: AppStyles.textStyle13,
+          style: AppStyles.textStyleNormal20(context),
         ),
         Wrap(
           spacing: 10,
           alignment: WrapAlignment.center,
-          runSpacing: 5.h,
+          runSpacing: 5,
           children: [
             StyledIconButton(image: AppImages.google),
             StyledIconButton(image: AppImages.facebook),

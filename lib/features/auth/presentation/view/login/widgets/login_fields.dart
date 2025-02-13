@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/utils/app_constants.dart';
-import '../../../../../core/utils/app_strings.dart';
-import '../../../../../core/utils/app_styles.dart';
-import 'styled_text_form_field.dart';
+import '../../../../../../core/utils/app_strings.dart';
+import '../../components/styled_text_form_field.dart';
 
 class LoginFields extends StatelessWidget {
   const LoginFields({super.key});
@@ -11,7 +9,7 @@ class LoginFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: AppConstants.heightSize10,
+      spacing: 20,
       children: [
         StyledTextFormField(
           labelText: AppStrings.username,
@@ -24,10 +22,6 @@ class LoginFields extends StatelessWidget {
           suffixIcon: Icons.lock,
           onTap: () {},
           controller: TextEditingController(),
-        ),
-        Text(
-          AppStrings.forgotPassword,
-          style: AppStyles.textStyle13,
         ),
       ],
     );
