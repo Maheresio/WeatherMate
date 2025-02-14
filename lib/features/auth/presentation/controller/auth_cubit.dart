@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../core/error/handle_exceptions.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../../domain/entity/user_entity.dart';
 
@@ -20,7 +21,10 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
     );
     result.fold(
-      (failure) => emit(AuthFailure(failure.message)),
+      (failure) {
+        final exception = ExceptionHandler.fromException(failure);
+        emit(AuthFailure(exception.message));
+      },
       (user) => emit(AuthSuccess(user)),
     );
   }
@@ -35,7 +39,10 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
     );
     result.fold(
-      (failure) => emit(AuthFailure(failure.message)),
+      (failure) {
+        final exception = ExceptionHandler.fromException(failure);
+        emit(AuthFailure(exception.message));
+      },
       (user) => emit(AuthSuccess(user)),
     );
   }
@@ -44,7 +51,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final result = await authRepository.signOut();
     result.fold(
-      (failure) => emit(AuthFailure(failure.message)),
+      (failure) {
+        final exception = ExceptionHandler.fromException(failure);
+        emit(AuthFailure(exception.message));
+      },
       (_) => emit(AuthUnauthenticated()),
     );
   }
@@ -53,7 +63,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     final result = await authRepository.getCachedUser();
     result.fold(
-      (failure) => emit(AuthFailure(failure.message)),
+      (failure) {
+        final exception = ExceptionHandler.fromException(failure);
+        emit(AuthFailure(exception.message));
+      },
       (user) {
         if (user != null) {
           emit(AuthSuccess(user));
