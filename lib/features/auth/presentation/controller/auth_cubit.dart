@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:weather_mate/features/auth/domain/usecases/login_usecase.dart';
 import 'package:weather_mate/features/auth/domain/usecases/register_usecase.dart';
 
-import '../../../../core/error/handle_exceptions.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../../domain/entity/user_entity.dart';
 
@@ -12,19 +12,19 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepository) : super(AuthInitial());
 
   final AuthRepository authRepository;
-  Future<void> signInWithEmailAndPassword({
+  Future<void> loginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     emit(AuthLoading());
-    final result = await authRepository.loginWithEmailAndPassword(
+    final result =
+        await LoginWithEmailAndPasswordUseCase(authRepository).execute(
       email: email,
       password: password,
     );
     result.fold(
       (failure) {
-        final exception = ExceptionHandler.fromException(failure);
-        emit(AuthFailure(exception.message));
+        emit(AuthFailure(failure.message));
       },
       (user) => emit(AuthSuccess(user)),
     );
@@ -51,8 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authRepository.signOut();
     result.fold(
       (failure) {
-        final exception = ExceptionHandler.fromException(failure);
-        emit(AuthFailure(exception.message));
+        emit(AuthFailure(failure.message));
       },
       (_) => emit(AuthUnauthenticated()),
     );
@@ -63,8 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authRepository.getCachedUser();
     result.fold(
       (failure) {
-        final exception = ExceptionHandler.fromException(failure);
-        emit(AuthFailure(exception.message));
+        emit(AuthFailure(failure.message));
       },
       (user) {
         if (user != null) {
