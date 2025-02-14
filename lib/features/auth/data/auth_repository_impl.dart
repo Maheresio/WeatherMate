@@ -4,7 +4,7 @@ import 'package:weather_mate/core/error/failure.dart';
 import 'package:weather_mate/features/auth/domain/entity/user_entity.dart';
 import 'package:weather_mate/features/auth/domain/repository/auth_repository.dart';
 
-import '../../../core/error/handle_exceptions.dart';
+import '../../../core/error/handle_errors.dart';
 import 'firebase_auth_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -26,7 +26,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       return Right(user);
     } catch (e) {
-      return Left(Failure(e.toString()));
+      final exception = ErrorHandler.fromException(e);
+      
+      return Left(Failure(exception.message));
     }
   }
 
@@ -40,7 +42,8 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       return const Right(null);
     } catch (e) {
-      return Left(Failure(e.toString()));
+      final exception = ErrorHandler.fromException(e);
+      return Left(Failure(exception.message));
     }
   }
 
@@ -51,7 +54,8 @@ class AuthRepositoryImpl implements AuthRepository {
       await prefs.setString('idToken', newToken);
       return Right(newToken);
     } catch (e) {
-      return Left(Failure(e.toString()));
+      final exception = ErrorHandler.fromException(e);
+      return Left(Failure(exception.message));
     }
   }
 
@@ -62,7 +66,8 @@ class AuthRepositoryImpl implements AuthRepository {
       await _clearCache();
       return Right(null);
     } catch (e) {
-      return Left(Failure(e.toString()));
+      final exception = ErrorHandler.fromException(e);
+      return Left(Failure(exception.message));
     }
   }
 
@@ -90,7 +95,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _cacheUser(user);
       return Right(user);
     } catch (e) {
-      final exception = ExceptionHandler.fromException(e);
+      final exception = ErrorHandler.fromException(e);
       return Left(Failure(exception.message));
     }
   }
