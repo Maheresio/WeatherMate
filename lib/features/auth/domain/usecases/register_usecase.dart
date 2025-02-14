@@ -9,13 +9,15 @@ class RegisterWithEmailAndPasswordUseCase {
 
   RegisterWithEmailAndPasswordUseCase(this.authRepository);
 
-  Future<Either<Failure, UserEntity>> call({
+  Future<Either<Failure, UserEntity>> execute({
     required String email,
     required String password,
+    required String username,
   }) async {
     return await authRepository.registerWithEmailAndPassword(
       email: email,
       password: password,
+      username: username,
     );
   }
 }

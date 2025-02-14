@@ -4,22 +4,22 @@ import 'package:weather_mate/core/error/failure.dart';
 import 'package:weather_mate/features/auth/domain/entity/user_entity.dart';
 import 'package:weather_mate/features/auth/domain/repository/auth_repository.dart';
 
+import '../../../core/error/handle_exceptions.dart';
 import 'firebase_auth_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthDataSource firebaseAuthDataSource;
-  final SharedPreferences prefs;
+  late final SharedPreferences prefs;
 
   AuthRepositoryImpl({
     required this.firebaseAuthDataSource,
-    required this.prefs,
   });
 
   @override
   Future<Either<Failure, UserEntity>> loginWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      final user = await firebaseAuthDataSource.signInWithEmailAndPassword(
+      final user = await firebaseAuthDataSource.loginWithEmailAndPassword(
           email: email, password: password);
 
       await _cacheUser(user);
@@ -75,18 +75,23 @@ class AuthRepositoryImpl implements AuthRepository {
     await prefs.remove('userEmail');
     await prefs.remove('idToken');
   }
-  
+
   @override
-  Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({required String email, required String password}) async{
-     try {
+  Future<Either<Failure, UserEntity>> registerWithEmailAndPassword(
+      {required String email,
+      required String password,
+      required String username}) async {
+    try {
       final user = await firebaseAuthDataSource.registerWithEmailAndPassword(
         email: email,
         password: password,
+        username: username,
       );
       await _cacheUser(user);
       return Right(user);
     } catch (e) {
-      return Left(Failure( e.toString()));
+      final exception = ExceptionHandler.fromException(e);
+      return Left(Failure(exception.message));
     }
   }
 }

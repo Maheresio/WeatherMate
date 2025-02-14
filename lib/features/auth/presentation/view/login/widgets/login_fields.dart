@@ -14,13 +14,11 @@ class LoginFields extends StatelessWidget {
         StyledTextFormField(
           labelText: AppStrings.username,
           suffixIcon: Icons.person,
-          onTap: () {},
           controller: TextEditingController(),
         ),
         StyledTextFormField(
           labelText: AppStrings.password,
           suffixIcon: Icons.lock,
-          onTap: () {},
           controller: TextEditingController(),
         ),
       ],

@@ -8,6 +8,7 @@ class MobileRegisterViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: CustomScrollView(
         slivers: [
           SliverFillRemaining(

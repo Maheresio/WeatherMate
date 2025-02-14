@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:weather_mate/features/auth/domain/entity/user_entity.dart';
 
 abstract class FirebaseAuthDataSource {
-  Future<UserEntity> signInWithEmailAndPassword({
+  Future<UserEntity> loginWithEmailAndPassword({
     required String email,
     required String password,
   });
@@ -11,6 +11,7 @@ abstract class FirebaseAuthDataSource {
   Future<UserEntity> registerWithEmailAndPassword({
     required String email,
     required String password,
+    required String username,
   });
 
   Future<void> signOut();
@@ -24,7 +25,7 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<UserEntity> signInWithEmailAndPassword({
+  Future<UserEntity> loginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -45,14 +46,17 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
   Future<UserEntity> registerWithEmailAndPassword({
     required String email,
     required String password,
+    required String username,
   }) async {
     final userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
+    userCredential.user!.updateDisplayName(username);
+
     return UserEntity(
-      email: userCredential.user!.email!,
+      email: userCredential.user!.email,
       idToken: await userCredential.user!.getIdToken(),
     );
   }

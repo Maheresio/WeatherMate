@@ -28,7 +28,20 @@ class ExceptionHandler extends Failure {
       return _handleFirebaseStorageException(error);
     } else if (error is Exception) {
       return _handleGenericException(error);
+    } else if (error is SocketException) {
+      return "No internet connection. Please check your network.";
+    } else if (error is MissingPluginException) {
+      return "A required plugin is missing. Please ensure all dependencies are properly configured.";
+    } else if (error is UnimplementedError) {
+      return "This feature is not implemented on the current platform.";
+    } else if (error is AssertionError) {
+      return "An assertion error occurred. Please report this issue.";
+    } else if (error is RangeError) {
+      return "A value is out of range.";
+    } else if (error is TypeError) {
+      return "A type conversion error occurred.";
     }
+
     return "An unexpected error occurred";
   }
 

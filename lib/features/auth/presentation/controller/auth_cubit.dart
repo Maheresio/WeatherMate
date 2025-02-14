@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:weather_mate/features/auth/domain/usecases/register_usecase.dart';
 
 import '../../../../core/error/handle_exceptions.dart';
 import '../../domain/repository/auth_repository.dart';
@@ -32,16 +33,14 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> registerWithEmailAndPassword({
     required String email,
     required String password,
+    required String username,
   }) async {
     emit(AuthLoading());
-    final result = await authRepository.registerWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    final result = await RegisterWithEmailAndPasswordUseCase(authRepository)
+        .execute(email: email, password: password, username: username);
     result.fold(
       (failure) {
-        final exception = ExceptionHandler.fromException(failure);
-        emit(AuthFailure(exception.message));
+        emit(AuthFailure(failure.message));
       },
       (user) => emit(AuthSuccess(user)),
     );
