@@ -3,9 +3,17 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:weather_mate/core/error/failure.dart';
 
-abstract class ExceptionHandler {
-  static String handleError(dynamic error) {
+class ExceptionHandler extends Failure {
+  ExceptionHandler(super.message);
+
+  factory ExceptionHandler.fromException(dynamic error) {
+    String message = _handleError(error);
+    return ExceptionHandler(message);
+  }
+
+  static String _handleError(dynamic error) {
     if (error is FirebaseAuthException) {
       return _handleFirebaseAuthException(error);
     } else if (error is PlatformException) {
