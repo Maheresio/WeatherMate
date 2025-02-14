@@ -44,6 +44,8 @@ dependencies:
   dartz: ^0.10.1
   shared_preferences: ^2.5.2
   flutter_bloc: ^9.0.0
+  bloc: ^9.0.0
+  meta: ^1.15.0
   
 
 dev_dependencies:
