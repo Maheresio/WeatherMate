@@ -1,0 +1,521 @@
+## **Authentication Documentation**
+
+### **Overview**
+The authentication system is built using **Clean Architecture**, which separates the application into layers:
+
+1. **Presentation Layer**: Handles UI and user interactions.
+2. **Domain Layer**: Contains business logic and use cases.
+3. **Data Layer**: Manages data sources (e.g., Firebase) and repositories.
+
+The system provides two main functionalities:
+1. **Login with Email and Password**
+2. **Register with Email and Password**
+
+---
+
+### **Components**
+
+#### **1. Domain Layer**
+The domain layer contains the core business logic and defines the contracts (interfaces) for the repositories and use cases.
+
+##### **Entities**
+- `UserEntity`: Represents the user data.
+  ```dart
+  class UserEntity {
+    final String email;
+    final String idToken;
+    final String uid;
+    final String? userName;
+
+    UserEntity({
+      required this.email,
+      required this.idToken,
+      required this.uid,
+      this.userName,
+    });
+  }
+  ```
+
+##### **Use Cases**
+
+- `LoginWithEmailAndPasswordUseCase`: Handles the login operation.
+  
+
+  class LoginWithEmailAndPasswordUseCase {
+    final AuthRepository authRepository;
+
+    LoginWithEmailAndPasswordUseCase(this.authRepository);
+
+    Future<Either<Failure, UserEntity>> execute({
+      required String email,
+      required String password,
+    }) async {
+      return await authRepository.loginWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    }
+  }
+ 
+
+- `RegisterWithEmailAndPasswordUseCase`: Handles the registration operation.
+ 
+  class RegisterWithEmailAndPasswordUseCase {
+    final AuthRepository authRepository;
+
+    RegisterWithEmailAndPasswordUseCase(this.authRepository);
+
+    Future<Either<Failure, UserEntity>> execute({
+      required String email,
+      required String password,
+      required String username,
+    }) async {
+      return await authRepository.registerWithEmailAndPassword(
+        email: email,
+        password: password,
+        username: username,
+      );
+    }
+  }
+ 
+
+##### **Repository Contract**
+- `AuthRepository`: Defines the methods for authentication.
+
+  abstract class AuthRepository {
+    Future<Either<Failure, UserEntity>> loginWithEmailAndPassword({
+      required String email,
+      required String password,
+    });
+
+    Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({
+      required String email,
+      required String password,
+      required String username,
+    });
+  }
+
+
+---
+
+#### **2. Data Layer**
+The data layer implements the repository contract and interacts with external data sources (e.g., Firebase).
+
+##### **Repository Implementation**
+- `AuthRepositoryImpl`: Implements the `AuthRepository` contract.
+ 
+  class AuthRepositoryImpl implements AuthRepository {
+    final FirebaseAuthDataSource firebaseAuthDataSource;
+
+    AuthRepositoryImpl(this.firebaseAuthDataSource);
+
+    @override
+    Future<Either<Failure, UserEntity>> loginWithEmailAndPassword({
+      required String email,
+      required String password,
+    }) async {
+      try {
+        final user = await firebaseAuthDataSource.loginWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        await _cacheUser(user);
+        return Right(user);
+      } catch (e) {
+        final exception = ErrorHandler.fromException(e);
+        return Left(Failure(exception.message));
+      }
+    }
+
+    @override
+    Future<Either<Failure, UserEntity>> registerWithEmailAndPassword({
+      required String email,
+      required String password,
+      required String username,
+    }) async {
+      try {
+        final user = await firebaseAuthDataSource.registerWithEmailAndPassword(
+          email: email,
+          password: password,
+          username: username,
+        );
+        
+        return Right(user);
+      } catch (e) {
+        final exception = ErrorHandler.fromException(e);
+        return Left(Failure(exception.message));
+      }
+    }
+
+
+
+##### **Data Source**
+
+- `FirebaseAuthDataSource`: Defines the methods for interacting with Firebase.
+  
+  abstract class FirebaseAuthDataSource {
+    Future<UserEntity> loginWithEmailAndPassword({
+      required String email,
+      required String password,
+    });
+
+    Future<UserEntity> registerWithEmailAndPassword({
+      required String email,
+      required String password,
+      required String username,
+    });
+  }
+
+
+- `FirebaseAuthDataSourceImpl`: Implements the `FirebaseAuthDataSource` contract.
+  
+  class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    @override
+    Future<UserEntity> loginWithEmailAndPassword({
+      required String email,
+      required String password,
+    }) async {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return UserEntity(
+        email: userCredential.user!.email!,
+        idToken: await userCredential.user!.getIdToken(),
+        uid: userCredential.user!.uid,
+        userName: userCredential.user!.displayName,
+      );
+    }
+
+    @override
+    Future<UserEntity> registerWithEmailAndPassword({
+      required String email,
+      required String password,
+      required String username,
+    }) async {
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      userCredential.user!.updateDisplayName(username);
+
+      return UserEntity(
+        email: userCredential.user!.email!,
+        idToken: await userCredential.user!.getIdToken(),
+        uid: userCredential.user!.uid,
+        userName: username,
+      );
+    }
+  }
+
+
+
+
+### **Flow of Operations**
+
+#### **1. Login Flow**
+
+1. **Presentation Layer**: User enters email and password.
+
+2. **Domain Layer**: `LoginWithEmailAndPasswordUseCase` is invoked.
+
+3. **Data Layer**:
+   - `AuthRepositoryImpl` calls `FirebaseAuthDataSourceImpl` to authenticate the user.
+   - On success, the user data is cached locally.
+
+4. **Response**: Returns `Either<Failure, UserEntity>` to the presentation layer.
+
+#### **2. Registration Flow**
+
+1. **Presentation Layer**: User enters email, password, and username.
+
+2. **Domain Layer**: `RegisterWithEmailAndPasswordUseCase` is invoked.
+
+3. **Data Layer**:
+   - `AuthRepositoryImpl` calls `FirebaseAuthDataSourceImpl` to register the user.
+   - On success, the user data is cached locally.
+
+4. **Response**: Returns `Either<Failure, UserEntity>` to the presentation layer.
+
+---
+
+### **Error Handling**
+- Errors are caught and wrapped in a `Failure` object using `ErrorHandler`.
+- Example:
+  try {
+    // Authentication logic
+  } catch (e) {
+    final exception = ErrorHandler.fromException(e);
+    return Left(Failure(exception.message));
+  }
+
+---
+
+### **Usage Example**
+
+#### **Login**
+
+final loginUseCase = LoginWithEmailAndPasswordUseCase(authRepository);
+final result = await loginUseCase.execute(
+  email: 'user@example.com',
+  password: 'password123',
+);
+
+result.fold(
+  (failure) => print('Login failed: ${failure.message}'),
+  (user) => print('Logged in as ${user.email}'),
+);
+
+
+#### **Register**
+
+final registerUseCase = RegisterWithEmailAndPasswordUseCase(authRepository);
+final result = await registerUseCase.execute(
+  email: 'user@example.com',
+  password: 'password123',
+  username: 'JohnDoe',
+);
+
+result.fold(
+  (failure) => print('Registration failed: ${failure.message}'),
+  (user) => print('Registered as ${user.email}'),
+);
+
+
+
+
+### **Testing **
+
+Testing is a critical part of ensuring the reliability and correctness of the **Register and Login** functionality. The tests are written using the **Flutter Test** framework and **Mockito** for mocking dependencies. Below is the documentation for the test cases.
+
+---
+
+## **Test Cases for RegisterWithEmailAndPasswordUseCase**
+
+### **Test Setup**
+
+- **Dependencies**:
+  - `MockAuthRepositoryImpl`: A mock implementation of the `AuthRepository` interface.
+  - `RegisterWithEmailAndPasswordUseCase`: The use case being tested.
+  
+- **Test Data**:
+  - `testEmail`: A valid email for testing (`"test@example.com"`).
+  - `testPassword`: A valid password for testing (`"StrongPass1"`).
+  - `testUsername`: A valid username for testing (`"TestUser"`).
+  - `testUser`: A mock `UserEntity` object representing a successfully registered user.
+
+---
+
+### **Test Groups**
+The tests are grouped under `🧪 RegisterWithEmailAndPasswordUseCase Tests` to organize related test cases.
+
+---
+
+### **Test Cases**
+
+#### **1. ✅ Successful Registration**
+- **Description**: Ensures that the use case returns a `Right` with a `UserEntity` when valid credentials are provided.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method of `AuthRepository` to return a `Right(testUser)`.
+  2. Call the `execute` method of `RegisterWithEmailAndPasswordUseCase` with valid credentials.
+  3. Verify that the result is a `Right` and contains the expected `UserEntity`.
+  4. Ensure the repository method is called exactly once with the correct parameters.
+- **Code**:
+  ```dart
+  test('✅ Should register successfully when credentials are valid', () async {
+    // Arrange
+    when(mockRepository.registerWithEmailAndPassword(
+      email: anyNamed('email'),
+      password: anyNamed('password'),
+      username: anyNamed('username'),
+    )).thenAnswer((_) async => Right(testUser));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result, isA<Right<Failure, UserEntity>>());
+    expect(result.isRight(), true);
+    expect(result.getOrElse(() => throw Exception("Error")), testUser);
+
+    verify(mockRepository.registerWithEmailAndPassword(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    )).called(1);
+  });
+  ```
+
+---
+
+#### **2. ❌ Invalid Email Format**
+- **Description**: Ensures that the use case returns a `Left` with a `Failure` when the email format is invalid.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method to return a `Left(Failure("Invalid email format"))`.
+  2. Call the `execute` method with an invalid email.
+  3. Verify that the result is a `Left` and contains the expected error message.
+- **Code**:
+  ```dart
+  test('❌ Should return failure when email format is invalid', () async {
+    // Arrange
+    const invalidEmail = "invalid-email";
+    when(mockRepository.registerWithEmailAndPassword(
+      email: invalidEmail,
+      password: testPassword,
+      username: testUsername,
+    )).thenAnswer((_) async => Left(Failure("Invalid email format")));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: invalidEmail,
+      password: testPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result.isLeft(), true);
+    expect(result.fold((failure) => failure.message, (_) => ""),
+        "Invalid email format");
+  });
+  ```
+
+---
+
+#### **3. ❌ Weak Password**
+- **Description**: Ensures that the use case returns a `Left` with a `Failure` when the password is too weak.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method to return a `Left(Failure("Weak password"))`.
+  2. Call the `execute` method with a weak password.
+  3. Verify that the result is a `Left` and contains the expected error message.
+- **Code**:
+  ```dart
+  test('❌ Should return failure when password is too weak', () async {
+    // Arrange
+    const weakPassword = "12345";
+    when(mockRepository.registerWithEmailAndPassword(
+      email: testEmail,
+      password: weakPassword,
+      username: testUsername,
+    )).thenAnswer((_) async => Left(Failure("Weak password")));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: testEmail,
+      password: weakPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result.isLeft(), true);
+    expect(result.fold((failure) => failure.message, (_) => ""),
+        "Weak password");
+  });
+  ```
+
+---
+
+#### **4. ❌ Email Already in Use**
+- **Description**: Ensures that the use case returns a `Left` with a `Failure` when the email is already registered.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method to return a `Left(Failure("The email address is already in use"))`.
+  2. Call the `execute` method with an email that is already in use.
+  3. Verify that the result is a `Left` and contains the expected error message.
+- **Code**:
+  ```dart
+  test('❌ Should return failure when email is already in use', () async {
+    // Arrange
+    when(mockRepository.registerWithEmailAndPassword(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    )).thenAnswer((_) async =>
+        Left(Failure("The email address is already in use")));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result.isLeft(), true);
+    expect(result.fold((failure) => failure.message, (_) => ""),
+        "The email address is already in use");
+  });
+  ```
+
+---
+
+#### **5. ❌ Network Error**
+- **Description**: Ensures that the use case returns a `Left` with a `Failure` when there is a network issue.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method to return a `Left(Failure("Network error"))`.
+  2. Call the `execute` method.
+  3. Verify that the result is a `Left` and contains the expected error message.
+- **Code**:
+  ```dart
+  test('❌ Should return failure when there is a network issue', () async {
+    // Arrange
+    when(mockRepository.registerWithEmailAndPassword(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    )).thenAnswer((_) async => Left(Failure("Network error")));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result.isLeft(), true);
+    expect(result.fold((failure) => failure.message, (_) => ""),
+        "Network error");
+  });
+  ```
+
+---
+
+#### **6. ❌ Unknown Error**
+- **Description**: Ensures that the use case returns a `Left` with a `Failure` when an unexpected error occurs.
+- **Steps**:
+  1. Mock the `registerWithEmailAndPassword` method to throw an exception.
+  2. Call the `execute` method.
+  3. Verify that the result is a `Left`.
+- **Code**:
+  ```dart
+  test('❌ Should return failure when an unknown error occurs', () async {
+    // Arrange
+    when(mockRepository.registerWithEmailAndPassword(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    )).thenThrow(Exception("An unexpected error occurred"));
+
+    // Act
+    final result = await registerUseCase.execute(
+      email: testEmail,
+      password: testPassword,
+      username: testUsername,
+    );
+
+    // Assert
+    expect(result.isLeft(), true);
+  });
+  ```
+
+---
+
+### **Conclusion**
+The test cases cover various scenarios, including success and failure cases, ensuring the robustness of the **RegisterWithEmailAndPasswordUseCase**. By mocking dependencies and simulating different conditions, the tests validate the correctness of the use case implementation.
