@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/maheresio/snap/flutter/common/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/maheresio/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/media/maheresio/New Volume/Dev/weather_mate/android/app/.cxx/Debug/82k3o4z2/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/maheresio/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/media/maheresio/New Volume/Dev/weather_mate/android/app/.cxx/Debug/82k3o4z2/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

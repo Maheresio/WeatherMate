@@ -1,0 +1,1 @@
+/media/maheresio/New Volume/Dev/weather_mate/build/app/intermediates/cxx/Debug/82k3o4z2/obj/arm64-v8a

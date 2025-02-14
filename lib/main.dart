@@ -12,10 +12,11 @@ import 'features/auth/data/auth_repository_impl.dart';
 import 'features/auth/presentation/controller/auth_cubit.dart';
 
 Future<void> main() async {
-  setupServicelocator();
   WidgetsFlutterBinding.ensureInitialized();
   styledStatusBar();
   await firebaseInit();
+ await setupServicelocator();
+
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,

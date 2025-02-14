@@ -5,11 +5,10 @@ import 'package:weather_mate/features/auth/data/firebase_auth_data_source.dart';
 final getIt = GetIt.instance;
 
 setupServicelocator() {
-  getIt.registerSingleton<FirebaseAuthDataSourceImpl>(
-    FirebaseAuthDataSourceImpl(),
+  getIt.registerLazySingleton<AuthRepositoryImpl>(
+    () => AuthRepositoryImpl(getIt.get<FirebaseAuthDataSourceImpl>()),
   );
-
-  getIt.registerSingleton<AuthRepositoryImpl>(
-    AuthRepositoryImpl(getIt.get<FirebaseAuthDataSourceImpl>()),
+  getIt.registerLazySingleton<FirebaseAuthDataSourceImpl>(
+    () => FirebaseAuthDataSourceImpl(),
   );
 }

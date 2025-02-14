@@ -33,6 +33,25 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, UserEntity>> registerWithEmailAndPassword(
+      {required String email,
+      required String password,
+      required String username}) async {
+    try {
+      final user = await firebaseAuthDataSource.registerWithEmailAndPassword(
+        email: email,
+        password: password,
+        username: username,
+      );
+      await _cacheUser(user);
+      return Right(user);
+    } catch (e) {
+      final exception = ErrorHandler.fromException(e);
+      return Left(Failure(exception.message));
+    }
+  }
+
+  @override
   Future<Either<Failure, UserEntity?>> getCachedUser() async {
     try {
       final email = prefs.getString('userEmail');
@@ -79,24 +98,5 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> _clearCache() async {
     await prefs.remove('userEmail');
     await prefs.remove('idToken');
-  }
-
-  @override
-  Future<Either<Failure, UserEntity>> registerWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String username}) async {
-    try {
-      final user = await firebaseAuthDataSource.registerWithEmailAndPassword(
-        email: email,
-        password: password,
-        username: username,
-      );
-      await _cacheUser(user);
-      return Right(user);
-    } catch (e) {
-      final exception = ErrorHandler.fromException(e);
-      return Left(Failure(exception.message));
-    }
   }
 }
