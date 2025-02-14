@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_mate/core/error/failure.dart';
 
-class ExceptionHandler extends Failure {
-  ExceptionHandler(super.message);
+class ErrorHandler extends Failure {
+  ErrorHandler(super.message);
 
-  factory ExceptionHandler.fromException(dynamic error) {
+  factory ErrorHandler.fromException(dynamic error) {
     String message = _handleError(error);
-    return ExceptionHandler(message);
+    return ErrorHandler(message);
   }
 
   static String _handleError(dynamic error) {
@@ -40,6 +40,14 @@ class ExceptionHandler extends Failure {
       return "A value is out of range.";
     } else if (error is TypeError) {
       return "A type conversion error occurred.";
+    } else if (error is StateError) {
+      return "Invalid state operation attempted.";
+    } else if (error is ArgumentError) {
+      return "Invalid argument provided to an operation.";
+    } else if (error is UnsupportedError) {
+      return "An unsupported operation was attempted.";
+    } else if (error is ConcurrentModificationError) {
+      return "Collection was modified during iteration.";
     }
 
     return "An unexpected error occurred";
@@ -113,7 +121,7 @@ class ExceptionHandler extends Failure {
       case "unauthorized-domain":
         return "The domain used for sign-in is not authorized.";
       default:
-        return "An unexpected error occurred. Please try again.";
+        return "An unknown Firebase Auth error occurred.";
     }
   }
 
