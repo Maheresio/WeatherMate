@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/auth/presentation/view/login/widgets/login_form.dart';
+import 'login_form.dart';
 
 import 'login_card.dart';
 

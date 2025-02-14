@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/auth/presentation/view/register/widgets/register_card.dart';
-import 'package:weather_mate/features/auth/presentation/view/register/widgets/register_form.dart';
+
+import 'register_card.dart';
+import 'register_form.dart';
 
 class MobileRegisterViewBody extends StatelessWidget {
   const MobileRegisterViewBody({super.key});

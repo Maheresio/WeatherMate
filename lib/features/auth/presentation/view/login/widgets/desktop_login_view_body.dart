@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/auth/presentation/view/login/widgets/login_card.dart';
-import 'package:weather_mate/features/auth/presentation/view/login/widgets/login_form.dart';
+import 'login_card.dart';
+import 'login_form.dart';
 
 import '../../../../../../core/utils/app_constants.dart';
 import '../../../../../../core/utils/app_styles.dart';

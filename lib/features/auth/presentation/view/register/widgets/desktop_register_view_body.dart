@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/auth/presentation/view/register/widgets/register_form.dart';
+import 'register_form.dart';
 
 import '../../../../../../core/utils/app_constants.dart';
 

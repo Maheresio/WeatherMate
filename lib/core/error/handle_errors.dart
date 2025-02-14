@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:weather_mate/core/error/failure.dart';
+
+import 'failure.dart';
 
 class ErrorHandler extends Failure {
   ErrorHandler(super.message);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/helpers/validation_methods.dart';
 import '../../../../../../core/utils/app_strings.dart';
 import '../../components/styled_text_form_field.dart';
 

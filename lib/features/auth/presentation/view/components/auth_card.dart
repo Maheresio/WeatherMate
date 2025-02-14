@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
-import 'package:weather_mate/core/utils/app_constants.dart';
-import 'package:weather_mate/core/utils/app_styles.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_constants.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 import '../../../../../core/utils/app_strings.dart';
 

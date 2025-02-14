@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_mate/core/error/failure.dart';
-import 'package:weather_mate/features/auth/domain/entity/user_entity.dart';
-import 'package:weather_mate/features/auth/domain/repository/auth_repository.dart';
+import '../../../core/error/failure.dart';
+import '../domain/entity/user_entity.dart';
+import '../domain/repository/auth_repository.dart';
 
 import '../../../core/error/handle_errors.dart';
 import 'firebase_auth_data_source.dart';

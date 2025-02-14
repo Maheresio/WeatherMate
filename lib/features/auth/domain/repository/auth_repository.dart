@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:weather_mate/features/auth/domain/entity/user_entity.dart';
+import '../entity/user_entity.dart';
 
 import '../../../../core/error/failure.dart';
 

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:weather_mate/features/auth/domain/usecases/login_usecase.dart';
-import 'package:weather_mate/features/auth/domain/usecases/register_usecase.dart';
+import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
 
 import '../../domain/repository/auth_repository.dart';
 import '../../domain/entity/user_entity.dart';

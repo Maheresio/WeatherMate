@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:weather_mate/features/auth/data/auth_repository_impl.dart';
-import 'package:weather_mate/features/auth/data/firebase_auth_data_source.dart';
 
 import 'core/helpers/firebase_init.dart';
 import 'core/helpers/styled_status_bar.dart';
 import 'core/utils/app_router.dart';
+import 'features/auth/data/auth_repository_impl.dart';
+import 'features/auth/data/firebase_auth_data_source.dart';
 import 'features/auth/presentation/controller/auth_cubit.dart';
 
 Future<void> main() async {

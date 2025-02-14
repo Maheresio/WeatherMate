@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
-import 'package:weather_mate/core/utils/app_router.dart';
-import 'package:weather_mate/features/auth/data/auth_repository_impl.dart';
-import 'package:weather_mate/features/auth/data/firebase_auth_data_source.dart';
-import 'package:weather_mate/features/auth/domain/usecases/register_usecase.dart';
-import 'package:weather_mate/features/auth/presentation/view/register/widgets/register_fields.dart';
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/app_router.dart';
+
+import 'register_fields.dart';
 
 import '../../../../../../core/utils/app_strings.dart';
 import '../../../../../../core/utils/app_styles.dart';
