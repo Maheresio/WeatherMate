@@ -11,9 +11,9 @@ class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthDataSource firebaseAuthDataSource;
   late final SharedPreferences prefs;
 
-  AuthRepositoryImpl({
-    required this.firebaseAuthDataSource,
-  });
+  AuthRepositoryImpl(
+    this.firebaseAuthDataSource,
+  );
 
   @override
   Future<Either<Failure, UserEntity>> loginWithEmailAndPassword(
@@ -27,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user);
     } catch (e) {
       final exception = ErrorHandler.fromException(e);
-      
+
       return Left(Failure(exception.message));
     }
   }
