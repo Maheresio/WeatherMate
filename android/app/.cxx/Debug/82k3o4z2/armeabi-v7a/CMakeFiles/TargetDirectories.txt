@@ -1,0 +1,2 @@
+/media/maheresio/New Volume/Dev/weather_mate/android/app/.cxx/Debug/82k3o4z2/armeabi-v7a/CMakeFiles/edit_cache.dir
+/media/maheresio/New Volume/Dev/weather_mate/android/app/.cxx/Debug/82k3o4z2/armeabi-v7a/CMakeFiles/rebuild_cache.dir
