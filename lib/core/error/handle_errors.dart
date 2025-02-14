@@ -15,8 +15,13 @@ class ErrorHandler extends Failure {
   }
 
   static String _handleError(dynamic error) {
+    print("Error Type: ${error.runtimeType}"); // Debug: Print the error type
+    print("Error Details: $error"); // Debug: Print the error details
+
     if (error is FirebaseAuthException) {
       return _handleFirebaseAuthException(error);
+    } else if (error is FirebaseException) {
+      return _handleFirebaseStorageException(error);
     } else if (error is PlatformException) {
       return _handlePlatformException(error);
     } else if (error is TimeoutException) {
@@ -25,10 +30,6 @@ class ErrorHandler extends Failure {
       return _handleHttpException(error);
     } else if (error is FormatException) {
       return _handleFormatException(error);
-    } else if (error is FirebaseException) {
-      return _handleFirebaseStorageException(error);
-    } else if (error is Exception) {
-      return _handleGenericException(error);
     } else if (error is SocketException) {
       return "No internet connection. Please check your network.";
     } else if (error is MissingPluginException) {
@@ -49,9 +50,14 @@ class ErrorHandler extends Failure {
       return "An unsupported operation was attempted.";
     } else if (error is ConcurrentModificationError) {
       return "Collection was modified during iteration.";
+    } else if (error is Exception) {
+      return _handleGenericException(error);
+    } else if (error is String) {
+      return error; // Handle string errors
     }
 
-    return "An unexpected error occurred";
+    // Fallback for unknown errors
+    return "An unknown error occurred: $error";
   }
 
   static String _handleFirebaseAuthException(FirebaseAuthException error) {

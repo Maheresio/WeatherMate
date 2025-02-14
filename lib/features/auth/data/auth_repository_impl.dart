@@ -22,8 +22,6 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await firebaseAuthDataSource.loginWithEmailAndPassword(
           email: email, password: password);
 
-      await _cacheUser(user);
-
       return Right(user);
     } catch (e) {
       final exception = ErrorHandler.fromException(e);
@@ -43,7 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
         username: username,
       );
-      await _cacheUser(user);
+
       return Right(user);
     } catch (e) {
       final exception = ErrorHandler.fromException(e);
@@ -74,6 +72,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(newToken);
     } catch (e) {
       final exception = ErrorHandler.fromException(e);
+
       return Left(Failure(exception.message));
     }
   }

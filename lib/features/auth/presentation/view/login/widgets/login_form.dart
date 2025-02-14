@@ -71,7 +71,14 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                 );
               }
-
+              if (state is AuthSuccess) {
+                return Center(
+                  child: Text(
+                    'Success',
+                    style: AppStyles.textStyleBold55(context),
+                  ),
+                );
+              }
               return AuthButton(
                 buttonText: AppStrings.login,
                 onPressed: () {

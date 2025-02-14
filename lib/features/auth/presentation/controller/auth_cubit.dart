@@ -39,9 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await RegisterWithEmailAndPasswordUseCase(authRepository)
         .execute(email: email, password: password, username: username);
     result.fold(
-      (failure) {
-        emit(AuthFailure(failure.message));
-      },
+      (failure) => emit(AuthFailure(failure.message)),
       (user) => emit(AuthSuccess(user)),
     );
   }

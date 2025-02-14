@@ -81,7 +81,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                 );
               }
-
+             
               return AuthButton(
                 buttonText: AppStrings.register,
                 onPressed: () {
