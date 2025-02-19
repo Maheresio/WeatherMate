@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   styledStatusBar();
   await firebaseInit();
- await setupServicelocator();
+  setupServicelocator();
 
   runApp(
     DevicePreview(
