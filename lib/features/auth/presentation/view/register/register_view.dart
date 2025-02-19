@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/adaptive_layout.dart';
+import '../components/auth_adaptive_layout.dart';
 import 'widgets/desktop_register_view_body.dart';
 import 'widgets/mobile_register_view_body.dart';
 import 'widgets/tablet_register_view_body.dart';
@@ -10,7 +10,7 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AdaptiveLayout(
+      body: AuthAdaptiveLayout(
         mobileLayout: (context) => MobileRegisterViewBody(),
         tabletLayout: (context) => TabletRegisterViewBody(),
         desktopLayout: (context) => DesktopRegisterViewBody(),

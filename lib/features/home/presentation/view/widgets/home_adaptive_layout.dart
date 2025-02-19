@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 
-class AdaptiveLayout extends StatelessWidget {
-  const AdaptiveLayout(
+class HomeAdaptiveLayout extends StatelessWidget {
+  const HomeAdaptiveLayout(
       {super.key,
       required this.mobileLayout,
       required this.tabletLayout,
