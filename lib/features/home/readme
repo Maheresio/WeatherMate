@@ -1,0 +1,286 @@
+
+## **Weather App Documentation**
+
+### **Overview**
+The app is a weather application built using **Flutter** and follows the **Clean Architecture** pattern. It provides weather information based on the user's current location or a custom search query. The app is **responsive** and uses external APIs (`weatherapi.com`) to fetch weather data.
+
+---
+
+## **Architecture**
+The app follows the **Clean Architecture** pattern, which separates the code into three main layers:
+
+1. **Presentation Layer**: Handles UI and user interactions.
+2. **Domain Layer**: Contains business logic and use cases.
+3. **Data Layer**: Manages data sources and repositories.
+
+---
+
+## **Project Structure**
+The project is organized as follows:
+
+```
+lib/
+├── core/
+│   ├── error/
+│   ├── utils/
+│   └── api_service.dart
+├── features/
+│   └── weather/
+│       ├── data/
+│       │   ├── data_source/
+│       │   └── repository_impl/
+│       ├── domain/
+│       │   ├── entity/
+│       │   ├── repository/
+│       │   └── usecases/
+│       └── presentation/
+│           ├── cubit/
+│           ├── pages/
+│           └── widgets/
+└── main.dart
+```
+
+---
+
+## **Components**
+
+### **1. Core Layer**
+The **Core Layer** contains shared utilities, error handling, and API services.
+
+#### **1.1 `ApiService`**
+- **Location**: `core/utils/api_service.dart`
+- **Purpose**: Handles HTTP requests to the weather API.
+- **Key Features**:
+  - Uses `Dio` for network requests.
+  - Provides a `get` method to fetch weather data.
+
+```dart
+class ApiService {
+  static const String baseUrl = 'http://api.weatherapi.com/v1';
+  static const String apiKey = '95fe712e7f564d2ab8752327251902';
+
+  final Dio _dio;
+  ApiService(this._dio);
+
+  Future<Map<String, dynamic>> get({required String endpoint, dynamic q}) async {
+    final response = await _dio.get('$baseUrl/$endpoint?key=$apiKey&q=$q');
+    return response.data;
+  }
+}
+```
+
+#### **1.2 `LocationService`**
+- **Location**: `core/utils/location_service.dart`
+- **Purpose**: Fetches the user's current location using the `geolocator` package.
+- **Key Features**:
+  - Checks and requests location permissions.
+  - Returns the user's `Position`.
+
+```dart
+class LocationService {
+  Future<Position> getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception('Location services are disabled.');
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception('Location permissions are denied.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception('Location permissions are permanently denied.');
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+}
+```
+
+---
+
+### **2. Data Layer**
+The **Data Layer** manages data sources and repositories.
+
+
+#### **2.1 `WeatherRemoteDataSource`**
+- **Location**: `features/weather/data/data_source/weather_remote_data_source.dart`
+- **Purpose**: Fetches weather data from the API.
+- **Key Features**:
+  - Uses `ApiService` to make network requests.
+  - Returns a `WeatherModel`.
+
+```dart
+abstract class WeatherRemoteDataSource {
+  Future<WeatherModel> getWeather(dynamic position);
+}
+
+class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
+  final ApiService apiService;
+
+  WeatherRemoteDataSourceImpl(this.apiService);
+
+  @override
+  Future<WeatherModel> getWeather(dynamic position) async {
+    final response = await apiService.get(endpoint: 'forecast.json', q: '$position&days=7');
+    return WeatherModel.fromJson(response);
+  }
+}
+```
+
+#### **2.2 `WeatherRepositoryImpl`**
+- **Location**: `features/weather/data/repository_impl/weather_repository_impl.dart`
+- **Purpose**: Implements the `WeatherRepository` interface and handles errors.
+- **Key Features**:
+  - Uses `WeatherRemoteDataSource` to fetch data.
+  - Returns `Either<Failure, WeatherEntity>` for error handling.
+
+```dart
+class WeatherRepositoryImpl implements WeatherRepository {
+  final WeatherRemoteDataSource remoteDataSource;
+
+  WeatherRepositoryImpl(this.remoteDataSource);
+
+  @override
+  Future<Either<Failure, WeatherEntity>> getWeather(dynamic position) async {
+    try {
+      final weatherModel = await remoteDataSource.getWeather(position);
+      return Right(weatherModel);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+}
+```
+
+---
+
+### **3. Domain Layer**
+The **Domain Layer** contains business logic and use cases.
+
+#### **3.1 `GetWeatherUsecase`**
+- **Location**: `features/weather/domain/usecases/get_weather_usecase.dart`
+- **Purpose**: Executes the `getWeather` use case.
+- **Key Features**:
+  - Uses `WeatherRepository` to fetch weather data.
+  - Returns `Either<Failure, WeatherEntity>`.
+
+```dart
+class GetWeatherUsecase {
+  final WeatherRepository weatherRepository;
+
+  GetWeatherUsecase(this.weatherRepository);
+
+  Future<Either<Failure, WeatherEntity>> execute(dynamic position) {
+    return weatherRepository.getWeather(position);
+  }
+}
+```
+
+---
+
+### **4. Presentation Layer**
+The **Presentation Layer** handles UI and state management.
+
+#### **4.1 `WeatherCubit`**
+- **Location**: `features/weather/presentation/cubit/weather_cubit.dart`
+- **Purpose**: Manages the state of weather data.
+- **Key Features**:
+  - Emits `WeatherLoading`, `WeatherSuccess`, and `WeatherFailed` states.
+  - Uses `GetWeatherUsecase` to fetch weather data.
+
+```dart
+class WeatherCubit extends Cubit<WeatherState> {
+  WeatherCubit(this.getWeatherUsecase) : super(WeatherInitial());
+
+  final GetWeatherUsecase getWeatherUsecase;
+
+  void getWeather(dynamic position) async {
+    emit(WeatherLoading());
+    final result = await getWeatherUsecase.execute(position);
+    result.fold(
+      (failure) => emit(WeatherFailed(message: failure.message)),
+      (weather) => emit(WeatherSuccess(weather: weather)),
+    );
+  }
+}
+```
+
+#### **4.2 `LocationCubit`**
+- **Location**: `features/weather/presentation/cubit/location_cubit.dart`
+- **Purpose**: Manages the state of the user's location.
+- **Key Features**:
+  - Emits `LocationLoading`, `LocationSuccess`, and `LocationFailed` states.
+  - Uses `LocationService` to fetch the current location.
+
+```dart
+class LocationCubit extends Cubit<LocationState> {
+  LocationCubit(this.locationService) : super(LocationInitial());
+
+  final LocationService locationService;
+
+  Future<void> fetchCurrentLocation() async {
+    emit(LocationLoading());
+    try {
+      final position = await locationService.getCurrentLocation();
+      emit(LocationSuccess(position));
+    } catch (e) {
+      emit(LocationFailed(e.toString()));
+    }
+  }
+}
+```
+
+---
+
+### **5. Dependency Injection**
+The app uses `GetIt` for dependency injection.
+
+#### **5.1 `setupServiceLocator`**
+- **Location**: `core/utils/service_locator.dart`
+- **Purpose**: Registers dependencies for the app.
+- **Key Features**:
+  - Registers `ApiService`, `WeatherRemoteDataSource`, `WeatherRepository`, and `LocationService`.
+
+```dart
+final getIt = GetIt.instance;
+
+setupServiceLocator() {
+  getIt.registerLazySingleton<ApiService>(() => ApiService(Dio()));
+  getIt.registerLazySingleton<WeatherRemoteDataSourceImpl>(
+    () => WeatherRemoteDataSourceImpl(getIt.get<ApiService>()),
+  );
+  getIt.registerLazySingleton<WeatherRepositoryImpl>(
+    () => WeatherRepositoryImpl(getIt.get<WeatherRemoteDataSourceImpl>()),
+  );
+  getIt.registerLazySingleton<LocationService>(() => LocationService());
+}
+```
+
+---
+
+## **Flow of the App**
+1. **Fetch Location**:
+   - The `LocationCubit` fetches the user's current location using `LocationService`.
+2. **Fetch Weather**:
+   - The `WeatherCubit` uses `GetWeatherUsecase` to fetch weather data based on the location.
+3. **Display Weather**:
+   - The UI listens to the `WeatherCubit` state and displays the weather data or error messages.
+
+---
+
+## **Error Handling**
+- The app uses `Either<Failure, WeatherEntity>` to handle errors gracefully.
+- Errors are categorized into `ServerFailure` and other generic failures.
+
+---
+
+## **Conclusion**
+This documentation provides a clear understanding of the app's architecture, components, and flow. By following Clean Architecture principles, the app is modular, testable, and maintainable.
