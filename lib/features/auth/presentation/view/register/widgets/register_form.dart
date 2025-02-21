@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../../../core/helpers/styled_snackbar.dart';
-import '../../../../../../core/widgets/styled_circular_progress_indicator.dart';
-import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_router.dart';
-
-import 'register_fields.dart';
-
 import '../../../../../../core/utils/app_strings.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../controller/auth_cubit.dart';
 import '../../components/auth_button.dart';
 import '../../components/social_auth_section.dart';
+import 'register_fields.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});

@@ -31,7 +31,6 @@ class SearchTextFieldState extends State<SearchTextField> {
     setState(() {
       _isTapped = !_isTapped;
     });
-    // Handle search icon press
   }
 
   @override
@@ -47,10 +46,13 @@ class SearchTextFieldState extends State<SearchTextField> {
               if (_controller.text.isNotEmpty) {
                 context.read<WeatherCubit>().getWeather(_controller.text);
               }
+              _controller.clear();
             },
             onSubmitted: (value) {
               if (_controller.text.isNotEmpty) {
                 context.read<WeatherCubit>().getWeather(_controller.text);
+
+                _controller.clear();
               }
             },
           ),
@@ -64,6 +66,7 @@ class SearchTextFieldState extends State<SearchTextField> {
             if (state is LocationSuccess) {
               context.read<WeatherCubit>().getWeather(
                   '${state.position.latitude},${state.position.longitude}');
+              _controller.clear();
             }
           },
           builder: (context, state) {
