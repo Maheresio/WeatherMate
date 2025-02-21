@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/entity/user_entity.dart';
+import '../../domain/repository/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
-
-import '../../domain/repository/auth_repository.dart';
-import '../../domain/entity/user_entity.dart';
 
 part 'auth_state.dart';
 

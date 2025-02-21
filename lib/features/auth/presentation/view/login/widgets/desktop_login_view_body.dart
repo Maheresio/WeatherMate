@@ -28,7 +28,7 @@ class DesktopLoginViewBody extends StatelessWidget {
                         bottomRight: Radius.circular(AppConstants.radius200),
                       ),
                     )),
-                    Expanded(
+                    const Expanded(
                       child: LoginForm(),
                     ),
                   ],

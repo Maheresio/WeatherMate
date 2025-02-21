@@ -14,7 +14,7 @@ class TabletLoginViewBody extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.2,
         ),
-        child: Column(
+        child: const Column(
           spacing: 80,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

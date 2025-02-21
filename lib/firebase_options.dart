@@ -85,5 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'weathermate-9164c.firebasestorage.app',
     measurementId: 'G-XVKC0B67LN',
   );
-
 }

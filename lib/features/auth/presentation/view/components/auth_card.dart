@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_constants.dart';
-import '../../../../../core/utils/app_styles.dart';
-
 import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 class AuthCard extends StatelessWidget {
   const AuthCard({
@@ -50,7 +50,7 @@ class AuthCard extends StatelessWidget {
               subtitle,
               style: subtitleStyle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
@@ -60,7 +60,7 @@ class AuthCard extends StatelessWidget {
                   vertical: screenWidth > 600 ? 20 : 15,
                 ),
                 backgroundColor: AppColors.primaryColor,
-                side: BorderSide(color: Colors.white),
+                side: const BorderSide(color: Colors.white),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
                     AppConstants.radius5,

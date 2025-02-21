@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import '../entity/user_entity.dart';
 
 import '../../../../core/error/failure.dart';
+import '../entity/user_entity.dart';
 import '../repository/auth_repository.dart';
 
 class LoginWithEmailAndPasswordUseCase {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_mate/features/home/presentation/view/home_view.dart';
+
 import '../../features/auth/presentation/view/login/login_view.dart';
 import '../../features/auth/presentation/view/register/register_view.dart';
-
+import '../../features/home/presentation/view/home_view.dart';
 import '../helpers/vertical_and_horizontal_transitions.dart';
 
 abstract class AppRouter {
@@ -26,11 +26,11 @@ abstract class AppRouter {
               ? verticalTransition(
                   state,
                   dy: -1.0,
-                  child: RegisterView(),
+                  child: const RegisterView(),
                 )
               : horizontalTransition(
                   state,
-                  child: RegisterView(),
+                  child: const RegisterView(),
                   dx: -1.0,
                 );
         },
@@ -42,11 +42,11 @@ abstract class AppRouter {
               ? verticalTransition(
                   state,
                   dy: 1.0,
-                  child: LoginView(),
+                  child: const LoginView(),
                 )
               : horizontalTransition(
                   state,
-                  child: LoginView(),
+                  child: const LoginView(),
                   dx: 1.0,
                 );
         },

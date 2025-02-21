@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 10,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
@@ -55,7 +55,7 @@ class _RegisterFormState extends State<RegisterForm> {
             passwordController: passwordController,
             usernameController: usernameController,
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           BlocConsumer<AuthCubit, AuthState>(
@@ -75,13 +75,13 @@ class _RegisterFormState extends State<RegisterForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return Center(
-                  child: const CircularProgressIndicator(
+                return const Center(
+                  child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
                 );
               }
-             
+
               return AuthButton(
                 buttonText: AppStrings.register,
                 onPressed: () {
@@ -96,7 +96,7 @@ class _RegisterFormState extends State<RegisterForm> {
               );
             },
           ),
-          SocialAuthSection(),
+          const SocialAuthSection(),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_colors.dart' show AppColors;
 
 import 'size_config.dart';
 
@@ -13,6 +14,11 @@ abstract class AppStyles {
         color: Colors.grey[600],
         fontWeight: FontWeight.bold,
       );
+  static TextStyle textStyleMedium18(BuildContext context) => TextStyle(
+        fontSize: getResponsiveFontSize(context, fontSize: 18),
+        color: Colors.white54,
+        fontWeight: FontWeight.w500,
+      );
 
   static TextStyle textStyleMedium20(BuildContext context) => TextStyle(
         fontSize: getResponsiveFontSize(context, fontSize: 20),
@@ -25,6 +31,11 @@ abstract class AppStyles {
         color: Colors.grey[600],
         fontWeight: FontWeight.normal,
       );
+  static TextStyle textStyleBoldl20(BuildContext context) => TextStyle(
+        fontSize: getResponsiveFontSize(context, fontSize: 20),
+        color: AppColors.lightWhiteColor,
+        fontWeight: FontWeight.bold,
+      );
 
   static TextStyle textStyleBold30(BuildContext context) => TextStyle(
         fontSize: getResponsiveFontSize(context, fontSize: 30),
@@ -36,6 +47,12 @@ abstract class AppStyles {
         color: Colors.white,
         fontWeight: FontWeight.bold,
       );
+ static TextStyle textStyleBold40(BuildContext context) => TextStyle(
+        fontSize: getResponsiveFontSize(context, fontSize: 40),
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      );
+
   static TextStyle textStyleBold55(BuildContext context) => TextStyle(
         fontSize: getResponsiveFontSize(context, fontSize: 55),
         color: Colors.black,

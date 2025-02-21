@@ -11,9 +11,9 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AuthAdaptiveLayout(
-        mobileLayout: (context) => MobileRegisterViewBody(),
-        tabletLayout: (context) => TabletRegisterViewBody(),
-        desktopLayout: (context) => DesktopRegisterViewBody(),
+        mobileLayout: (context) => const MobileRegisterViewBody(),
+        tabletLayout: (context) => const TabletRegisterViewBody(),
+        desktopLayout: (context) => const DesktopRegisterViewBody(),
       ),
     );
   }

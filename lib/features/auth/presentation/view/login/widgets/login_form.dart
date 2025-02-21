@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../controller/auth_cubit.dart';
 
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_strings.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import '../../../controller/auth_cubit.dart';
 import '../../components/auth_button.dart';
-import 'login_fields.dart';
 import '../../components/social_auth_section.dart';
+import 'login_fields.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -65,8 +65,8 @@ class _LoginFormState extends State<LoginForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return Center(
-                  child: const CircularProgressIndicator(
+                return const Center(
+                  child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
                 );
@@ -92,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
               );
             },
           ),
-          SocialAuthSection(),
+          const SocialAuthSection(),
         ],
       ),
     );

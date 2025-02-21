@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/home_adaptive_layout.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/home_desktop_view_body.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/home_mobile_view_body.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/home_tablet_view_body.dart';
+
+import '../../../../core/utils/app_colors.dart';
+import 'home_desktop_view_body.dart';
+import 'home_mobile_view_body.dart';
+import 'home_tablet_view_body.dart';
+import 'widgets/home_adaptive_layout.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       body: HomeAdaptiveLayout(
-        mobileLayout: (context) => HomeMobileViewBody(),
-        tabletLayout: (context) => HomeTabletViewBody(),
-        desktopLayout: (context) => HomeDesktopViewBody(),
+        mobileLayout: (context) => const HomeMobileViewBody(),
+        tabletLayout: (context) => const HomeTabletViewBody(),
+        desktopLayout: (context) => const HomeDesktopViewBody(),
       ),
     );
   }
