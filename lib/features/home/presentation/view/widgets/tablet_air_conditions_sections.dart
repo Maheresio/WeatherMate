@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../controller/weather/weather_cubit.dart';
-import 'air_condition_item.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
+import '../../controller/weather/weather_cubit.dart';
+import 'air_condition_item.dart';
 
 class TabletAirConditionsSection extends StatelessWidget {
   const TabletAirConditionsSection({
@@ -16,17 +18,11 @@ class TabletAirConditionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         if (state is WeatherFailed) {
-          return Center(
-            child: Text(
-              state.message,
-              style: AppStyles.textStyleMedium20(context).copyWith(
-                color: AppColors.lightWhiteColor,
-              ),
-            ),
+          return StyledErrorWidget(
+            message: state.message,
           );
         }
 
@@ -57,7 +53,8 @@ class TabletAirConditionsSection extends StatelessWidget {
                             icon: Icons.device_thermostat_rounded,
                             value: '${state.weather.temperatureFeelsLike}°',
                             style: AppStyles.textStyleBold18(context).copyWith(
-                              color: AppColors.lightWhiteColor,),
+                              color: AppColors.lightWhiteColor,
+                            ),
                           ),
                         ),
                         Flexible(
@@ -66,7 +63,8 @@ class TabletAirConditionsSection extends StatelessWidget {
                             value: '${state.weather.windSpeed} km/h',
                             icon: Icons.air_rounded,
                             style: AppStyles.textStyleBold18(context).copyWith(
-                              color: AppColors.lightWhiteColor,),
+                              color: AppColors.lightWhiteColor,
+                            ),
                           ),
                         ),
                       ],
@@ -82,7 +80,8 @@ class TabletAirConditionsSection extends StatelessWidget {
                             value: '${state.weather.humidity}%',
                             icon: Icons.water_drop_rounded,
                             style: AppStyles.textStyleBold18(context).copyWith(
-                              color: AppColors.lightWhiteColor,),
+                              color: AppColors.lightWhiteColor,
+                            ),
                           ),
                         ),
                         Flexible(
@@ -91,7 +90,8 @@ class TabletAirConditionsSection extends StatelessWidget {
                             value: '${state.weather.uv}',
                             icon: Icons.brightness_5_rounded,
                             style: AppStyles.textStyleBold18(context).copyWith(
-                              color: AppColors.lightWhiteColor,),
+                              color: AppColors.lightWhiteColor,
+                            ),
                           ),
                         ),
                       ],
@@ -103,9 +103,7 @@ class TabletAirConditionsSection extends StatelessWidget {
           );
         }
 
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const StyledCircularProgressIndicator();
       },
     );
   }

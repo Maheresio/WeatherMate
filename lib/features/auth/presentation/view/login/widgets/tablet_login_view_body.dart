@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'login_card.dart';
-
 import 'login_form.dart';
 
 class TabletLoginViewBody extends StatelessWidget {

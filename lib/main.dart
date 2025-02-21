@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_mate/core/utils/location_service.dart';
-import 'package:weather_mate/features/home/presentation/controller/location/location_cubit.dart';
 
 import 'core/helpers/firebase_init.dart';
 import 'core/helpers/styled_status_bar.dart';
 import 'core/utils/api_service.dart';
 import 'core/utils/app_router.dart';
+import 'core/utils/location_service.dart';
 import 'core/utils/service_locator.dart';
 import 'features/auth/data/auth_repository_impl.dart';
 import 'features/auth/presentation/controller/auth_cubit.dart';
 import 'features/home/data/data_source/weather_remote_data_source.dart';
 import 'features/home/data/repository_impl/weather_repository_impl.dart';
 import 'features/home/domain/usecases/get_weather_usecase.dart';
-import 'features/home/presentation/controller/weather/weather_provider.dart';
+import 'features/home/presentation/controller/location/location_cubit.dart';
 import 'features/home/presentation/controller/weather/weather_cubit.dart';
+import 'features/home/presentation/controller/weather/weather_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

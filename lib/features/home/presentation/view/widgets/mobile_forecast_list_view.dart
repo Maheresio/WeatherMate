@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../../core/utils/app_strings.dart';
-import '../../controller/weather/weather_provider.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/mobile_forecast_item.dart';
+import '../../controller/weather/weather_provider.dart';
+import 'mobile_forecast_item.dart';
 
 class MobileForecastListView extends StatelessWidget {
   const MobileForecastListView({
@@ -17,12 +20,11 @@ class MobileForecastListView extends StatelessWidget {
       height: 120,
       child: BlocConsumer<WeatherCubit, WeatherState>(
         listener: (context, state) {
-          // TODO: implement listener
         },
         builder: (context, state) {
           if (state is WeatherFailed) {
-            return const Center(
-              child: Text('Failed to load data'),
+            return StyledErrorWidget(
+              message: state.message,
             );
           }
 
@@ -62,9 +64,7 @@ class MobileForecastListView extends StatelessWidget {
                   );
           }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const StyledCircularProgressIndicator();
         },
       ),
     );

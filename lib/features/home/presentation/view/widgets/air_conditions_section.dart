@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'air_condition_item.dart';
 
@@ -16,17 +18,11 @@ class AirConditionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         if (state is WeatherFailed) {
-          return Center(
-            child: Text(
-              state.message,
-              style: AppStyles.textStyleMedium20(context).copyWith(
-                color: AppColors.lightWhiteColor,
-              ),
-            ),
+          return StyledErrorWidget(
+            message: state.message,
           );
         }
 
@@ -51,11 +47,12 @@ class AirConditionsSection extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                            child: AirConditionItem(
-                          text: AppStrings.realFeel,
-                          icon: Icons.device_thermostat_rounded,
-                          value: '${state.weather.temperatureFeelsLike}°',
-                        ),),
+                          child: AirConditionItem(
+                            text: AppStrings.realFeel,
+                            icon: Icons.device_thermostat_rounded,
+                            value: '${state.weather.temperatureFeelsLike}°',
+                          ),
+                        ),
                         Expanded(
                           child: AirConditionItem(
                             text: AppStrings.wind,
@@ -91,9 +88,7 @@ class AirConditionsSection extends StatelessWidget {
           );
         }
 
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const StyledCircularProgressIndicator();
       },
     );
   }

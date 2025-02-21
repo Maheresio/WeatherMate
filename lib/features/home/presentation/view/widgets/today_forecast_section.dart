@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'today_forecast_item.dart';
 
@@ -16,14 +18,10 @@ class TodayForecastSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         if (state is WeatherFailed) {
-          const Center(
-            child:
-                Text('No Data Available', style: TextStyle(color: Colors.red)),
-          );
+          const StyledErrorWidget();
         }
 
         if (state is WeatherSuccess) {
@@ -66,12 +64,10 @@ class TodayForecastSection extends StatelessWidget {
           );
         }
 
-        return const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.lightWhiteColor,
-          ),
-        );
+        return const StyledCircularProgressIndicator();
       },
     );
   }
 }
+
+

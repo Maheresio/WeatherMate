@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'details_card_info.dart';
 
@@ -13,8 +15,7 @@ class MobileDetailscard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is WeatherSuccess) {
           return Container(
@@ -52,13 +53,11 @@ class MobileDetailscard extends StatelessWidget {
         }
 
         if (state is WeatherFailed) {
-          return const Center(
-            child: Text('Failed to load data'),
+          return StyledErrorWidget(
+            message: state.message,
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const StyledCircularProgressIndicator();
       },
     );
   }

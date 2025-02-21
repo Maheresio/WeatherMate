@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
-import 'package:weather_mate/features/home/presentation/controller/location/location_cubit.dart';
-import 'package:weather_mate/features/home/presentation/controller/weather/weather_cubit.dart';
+
+import '../../../../../core/helpers/styled_snackbar.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../controller/location/location_cubit.dart';
+import '../../controller/weather/weather_cubit.dart';
+import 'stylish_text_field.dart';
 
 class SearchTextField extends StatefulWidget {
   const SearchTextField({
@@ -17,6 +21,12 @@ class SearchTextFieldState extends State<SearchTextField> {
   bool _isTapped = false;
   final TextEditingController _controller = TextEditingController();
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _handleTap() {
     setState(() {
       _isTapped = !_isTapped;
@@ -29,46 +39,15 @@ class SearchTextFieldState extends State<SearchTextField> {
     return Row(
       children: [
         Expanded(
-          child: TextField(
+          child: StylishTextField(
             controller: _controller,
-            decoration: InputDecoration(
-              hintText: 'Search for a city',
-              hintStyle: TextStyle(color: Colors.blueGrey[300]),
-              suffixIcon: InkWell(
-                onTap: () {
-                  _handleTap();
-                  if (_controller.text.isNotEmpty) {
-                    context.read<WeatherCubit>().getWeather(_controller.text);
-                  }
-                },
-                borderRadius: BorderRadius.circular(16),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  transform: Matrix4.translationValues(_isTapped ? 2 : 0, 0, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[200],
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Icon(Icons.search, color: Colors.white),
-                ),
-              ),
-              filled: true,
-              fillColor: Colors.blue[50],
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide.none,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: const BorderSide(
-                  color: Colors.blue,
-                ),
-              ),
-            ),
+            isTapped: _isTapped,
+            onTap: () {
+              _handleTap();
+              if (_controller.text.isNotEmpty) {
+                context.read<WeatherCubit>().getWeather(_controller.text);
+              }
+            },
             onSubmitted: (value) {
               if (_controller.text.isNotEmpty) {
                 context.read<WeatherCubit>().getWeather(_controller.text);
@@ -80,18 +59,17 @@ class SearchTextFieldState extends State<SearchTextField> {
         BlocConsumer<LocationCubit, LocationState>(
           listener: (context, state) {
             if (state is LocationFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                  backgroundColor: Colors.red,
-                ),
-              );
+              showStyledSnackBar(context, state.message);
             }
-            if(state is LocationSuccess){
-             context.read<WeatherCubit>().getWeather('');
+            if (state is LocationSuccess) {
+              context.read<WeatherCubit>().getWeather(
+                  '${state.position.latitude},${state.position.longitude}');
             }
           },
           builder: (context, state) {
+            if (state is LocationLoading) {
+              return const StyledCircularProgressIndicator();
+            }
             return Container(
               decoration: BoxDecoration(
                 color: Colors.blue[50],
@@ -102,7 +80,9 @@ class SearchTextFieldState extends State<SearchTextField> {
                   Icons.location_on_rounded,
                   color: AppColors.secondaryColor,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await context.read<LocationCubit>().fetchCurrentLocation();
+                },
               ),
             );
           },

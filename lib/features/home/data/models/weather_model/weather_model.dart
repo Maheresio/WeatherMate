@@ -1,5 +1,5 @@
-import 'package:weather_mate/core/helpers/format_day.dart';
-import 'package:weather_mate/features/home/domain/entity/weather_entity.dart';
+import '../../../../../core/helpers/format_day.dart';
+import '../../../domain/entity/weather_entity.dart';
 
 import 'current.dart';
 import 'forecast.dart';

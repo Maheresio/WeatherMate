@@ -2,7 +2,7 @@ import '../../../../core/utils/api_service.dart';
 import '../models/weather_model/weather_model.dart';
 
 abstract class WeatherRemoteDataSource {
-  Future<WeatherModel> getWeather(String city);
+  Future<WeatherModel> getWeather(dynamic position);
 }
 
 class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
@@ -11,9 +11,9 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
   WeatherRemoteDataSourceImpl(this.apiService);
 
   @override
-  Future<WeatherModel> getWeather(String city) async {
+  Future<WeatherModel> getWeather(dynamic position) async {
     final response =
-        await apiService.get(endpoint: 'forecast.json', q: '$city&days=7');
+        await apiService.get(endpoint: 'forecast.json', q: '$position&days=7');
 
     return WeatherModel.fromJson(response);
   }

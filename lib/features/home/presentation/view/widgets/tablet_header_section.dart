@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/features/home/presentation/controller/weather/weather_cubit.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
+import '../../controller/weather/weather_cubit.dart';
 
 class TabletHeaderSection extends StatelessWidget {
   const TabletHeaderSection({
@@ -16,13 +18,8 @@ class TabletHeaderSection extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is WeatherFailed) {
-          return Center(
-            child: Text(
-              state.message,
-              style: AppStyles.textStyleMedium20(context).copyWith(
-                color: AppColors.lightWhiteColor,
-              ),
-            ),
+          return StyledErrorWidget(
+            message: state.message,
           );
         }
 
@@ -70,11 +67,7 @@ class TabletHeaderSection extends StatelessWidget {
             ),
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.lightWhiteColor,
-          ),
-        );
+        return const StyledCircularProgressIndicator();
       },
     );
   }

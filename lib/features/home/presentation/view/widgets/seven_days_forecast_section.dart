@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/features/home/presentation/controller/weather/weather_cubit.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
+import '../../controller/weather/weather_cubit.dart';
 import 'seven_days_forecast_item.dart';
 
 class SevenDaysForecastSection extends StatelessWidget {
@@ -37,15 +39,11 @@ class SevenDaysForecastSection extends StatelessWidget {
               Expanded(
                 child: BlocConsumer<WeatherCubit, WeatherState>(
                   listener: (context, state) {
-                    // TODO: implement listener
                   },
                   builder: (context, state) {
                     if (state is WeatherFailed) {
-                      return Center(
-                        child: Text(
-                          state.message,
-                          style: AppStyles.textStyleBoldl20(context),
-                        ),
+                      return StyledErrorWidget(
+                        message: state.message,
                       );
                     }
                     if (state is WeatherSuccess) {
@@ -72,11 +70,8 @@ class SevenDaysForecastSection extends StatelessWidget {
                       );
                     }
 
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.lightWhiteColor,
-                      ),
-                    );
+                    return const 
+                      StyledCircularProgressIndicator();
                   },
                 ),
               ),

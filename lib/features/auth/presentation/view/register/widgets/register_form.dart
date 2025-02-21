@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../../core/helpers/styled_snackbar.dart';
+import '../../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_router.dart';
 
@@ -61,12 +63,7 @@ class _RegisterFormState extends State<RegisterForm> {
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.redAccent,
-                    content: Text(state.message),
-                  ),
-                );
+                showStyledSnackBar(context, state.message);
               }
 
               if (state is AuthSuccess) {
@@ -75,11 +72,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                );
+                return const StyledCircularProgressIndicator();
               }
 
               return AuthButton(
