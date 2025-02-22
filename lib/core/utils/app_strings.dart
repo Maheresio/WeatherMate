@@ -12,4 +12,14 @@ abstract class AppStrings {
   static const String register = 'Register';
   static const String registration = 'Registration';
   static const String welcomeBack = 'Welcome Back!';
+  static const String todayForcast = "TODAY'S FORECAST";
+  static const String sevenDayForecast = "7-DAY FORECAST";
+  static const String airCondition = "AIR CONDITIONS";
+  static const String realFeel = "Real Feel";
+  static const String humidity = "Humidity";
+  static const String wind = "Wind";
+  static const String uvIndex = "UV Index";
+  static const String chanceOfRain = "Chance of Rain";
+  static const String today = "Today";
+  static const String thisWeek = "This Week";
 }

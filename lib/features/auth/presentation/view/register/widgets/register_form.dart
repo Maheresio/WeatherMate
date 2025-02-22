@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../core/utils/app_colors.dart';
+
+import '../../../../../../core/helpers/styled_snackbar.dart';
 import '../../../../../../core/utils/app_router.dart';
-
-import 'register_fields.dart';
-
 import '../../../../../../core/utils/app_strings.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../controller/auth_cubit.dart';
 import '../../components/auth_button.dart';
 import '../../components/social_auth_section.dart';
+import 'register_fields.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 10,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
@@ -55,18 +55,13 @@ class _RegisterFormState extends State<RegisterForm> {
             passwordController: passwordController,
             usernameController: usernameController,
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.redAccent,
-                    content: Text(state.message),
-                  ),
-                );
+                showStyledSnackBar(context, state.message);
               }
 
               if (state is AuthSuccess) {
@@ -75,13 +70,9 @@ class _RegisterFormState extends State<RegisterForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return Center(
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                );
+                return const StyledCircularProgressIndicator();
               }
-             
+
               return AuthButton(
                 buttonText: AppStrings.register,
                 onPressed: () {
@@ -96,7 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
               );
             },
           ),
-          SocialAuthSection(),
+          const SocialAuthSection(),
         ],
       ),
     );

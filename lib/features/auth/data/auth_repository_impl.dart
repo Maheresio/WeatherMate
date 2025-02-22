@@ -82,7 +82,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await firebaseAuthDataSource.signOut();
       await _clearCache();
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       final exception = ErrorHandler.fromException(e);
       return Left(Failure(exception.message));

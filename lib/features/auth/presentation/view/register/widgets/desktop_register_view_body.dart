@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'register_form.dart';
 
 import '../../../../../../core/utils/app_constants.dart';
-
 import '../../../../../../core/utils/app_styles.dart';
 import 'register_card.dart';
+import 'register_form.dart';
 
 class DesktopRegisterViewBody extends StatelessWidget {
   const DesktopRegisterViewBody({super.key});
@@ -20,7 +19,7 @@ class DesktopRegisterViewBody extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: RegisterForm(),
                     ),
                     Expanded(

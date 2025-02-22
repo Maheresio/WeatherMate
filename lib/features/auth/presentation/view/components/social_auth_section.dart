@@ -17,7 +17,7 @@ class SocialAuthSection extends StatelessWidget {
           AppStrings.loginWithSocialPlatforms,
           style: AppStyles.textStyleNormal20(context),
         ),
-        Wrap(
+        const Wrap(
           spacing: 10,
           alignment: WrapAlignment.center,
           runSpacing: 5,

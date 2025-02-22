@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/utils/app_constants.dart';
 
 class StyledTextFormField extends StatelessWidget {
@@ -23,7 +24,7 @@ class StyledTextFormField extends StatelessWidget {
         controller: controller,
         validator: validator,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(
+          contentPadding: const EdgeInsets.symmetric(
             vertical: 20,
             horizontal: 20,
           ),

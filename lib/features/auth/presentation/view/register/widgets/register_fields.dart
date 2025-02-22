@@ -20,7 +20,7 @@ class RegisterFields extends StatelessWidget {
     return Column(
       spacing: 10,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         StyledTextFormField(

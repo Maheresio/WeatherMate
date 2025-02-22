@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../controller/auth_cubit.dart';
 
-import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/helpers/styled_snackbar.dart';
 import '../../../../../../core/utils/app_strings.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../controller/auth_cubit.dart';
 import '../../components/auth_button.dart';
-import 'login_fields.dart';
 import '../../components/social_auth_section.dart';
+import 'login_fields.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -53,23 +54,14 @@ class _LoginFormState extends State<LoginForm> {
           BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.redAccent,
-                    content: Text(state.message),
-                  ),
-                );
+                showStyledSnackBar(context, state.message);
               }
 
               if (state is AuthSuccess) {}
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return Center(
-                  child: const CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                );
+                return const StyledCircularProgressIndicator();
               }
               if (state is AuthSuccess) {
                 return Center(
@@ -92,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
               );
             },
           ),
-          SocialAuthSection(),
+          const SocialAuthSection(),
         ],
       ),
     );

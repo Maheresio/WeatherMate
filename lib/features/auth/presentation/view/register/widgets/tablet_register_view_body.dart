@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'register_card.dart';
 import 'register_form.dart';
 
-
 class TabletRegisterViewBody extends StatelessWidget {
   const TabletRegisterViewBody({super.key});
 
@@ -16,7 +15,7 @@ class TabletRegisterViewBody extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.2,
             ),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
@@ -24,7 +23,6 @@ class TabletRegisterViewBody extends StatelessWidget {
                   children: [
                     RegisterForm(),
                     SizedBox(height: 80),
-                    
                     RegisterCard(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(100),

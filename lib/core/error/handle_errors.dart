@@ -15,9 +15,6 @@ class ErrorHandler extends Failure {
   }
 
   static String _handleError(dynamic error) {
-    print("Error Type: ${error.runtimeType}"); // Debug: Print the error type
-    print("Error Details: $error"); // Debug: Print the error details
-
     if (error is FirebaseAuthException) {
       return _handleFirebaseAuthException(error);
     } else if (error is FirebaseException) {
