@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-
+import 'package:weather_mate/features/home/data/data_source/weather_prediction_data_source.dart';
+import 'package:weather_mate/features/home/data/repository_impl/weather_prediction_repository_impl.dart';
 import '../../features/auth/data/auth_repository_impl.dart';
 import '../../features/auth/data/firebase_auth_data_source.dart';
 import '../../features/home/data/data_source/weather_remote_data_source.dart';
@@ -10,36 +11,15 @@ import 'location_service.dart';
 
 final getIt = GetIt.instance;
 
-setupServicelocator() {
-  getIt.registerLazySingleton<FirebaseAuthDataSourceImpl>(
-    () => FirebaseAuthDataSourceImpl(),
-  );
-  getIt.registerLazySingleton<AuthRepositoryImpl>(
-    () => AuthRepositoryImpl(getIt.get<FirebaseAuthDataSourceImpl>()),
-  );
-
-  getIt.registerLazySingleton<Dio>(
-    () => Dio(),
-  );
-
-  getIt.registerLazySingleton<ApiService>(
-    () => ApiService(
-      getIt.get<Dio>(),
-    ),
-  );
-
-  getIt.registerLazySingleton<WeatherRemoteDataSourceImpl>(
-    () => WeatherRemoteDataSourceImpl(
-      getIt.get<ApiService>(),
-    ),
-  );
-
-  getIt.registerLazySingleton<WeatherRepositoryImpl>(
-    () => WeatherRepositoryImpl(
-      getIt.get<WeatherRemoteDataSourceImpl>(),
-    ),
-  );
-  getIt.registerLazySingleton<LocationService>(
-    () => LocationService(),
-  );
+void setupServiceLocator() {
+  getIt
+    ..registerLazySingleton(() => FirebaseAuthDataSourceImpl())
+    ..registerLazySingleton(() => AuthRepositoryImpl(getIt()))
+    ..registerLazySingleton(() => Dio())
+    ..registerLazySingleton(() => ApiService(getIt()))
+    ..registerLazySingleton(() => WeatherRemoteDataSourceImpl(getIt()))
+    ..registerLazySingleton(() => WeatherRepositoryImpl(getIt()))
+    ..registerLazySingleton(() => LocationService())
+    ..registerLazySingleton(() => WeatherPredictionDataSourceImpl(getIt()))
+    ..registerLazySingleton(() => WeatherPredictionRepositoryImpl(getIt()));
 }
