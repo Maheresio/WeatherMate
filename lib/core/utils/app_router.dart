@@ -8,6 +8,7 @@ import '../../features/home/presentation/view/home_view.dart';
 import '../helpers/vertical_and_horizontal_transitions.dart';
 
 abstract class AppRouter {
+  static const kInitLogin = '/initLoginView';
   static const kLogin = '/loginView';
   static const kRegister = '/registerView';
   static const kHome = '/homeView';
@@ -53,7 +54,7 @@ abstract class AppRouter {
         },
       ),
       GoRoute(
-        path: kLogin,
+        path: kInitLogin,
         pageBuilder: (BuildContext context, GoRouterState state) {
           return CustomTransitionPage(
             key: state.pageKey,

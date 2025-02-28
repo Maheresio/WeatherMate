@@ -17,7 +17,7 @@ class SplashViewBody extends StatelessWidget {
             composition.duration,
             () {
               if (context.mounted) {
-                GoRouter.of(context).pushReplacement(AppRouter.kLogin);
+                GoRouter.of(context).pushReplacement(AppRouter.kInitLogin);
               }
             },
           );
@@ -26,4 +26,3 @@ class SplashViewBody extends StatelessWidget {
     );
   }
 }
-
