@@ -14,12 +14,15 @@ final getIt = GetIt.instance;
 void setupServiceLocator() {
   getIt
     ..registerLazySingleton(() => FirebaseAuthDataSourceImpl())
-    ..registerLazySingleton(() => AuthRepositoryImpl(getIt()))
+    ..registerLazySingleton(
+        () => AuthRepositoryImpl(getIt<FirebaseAuthDataSourceImpl>()))
     ..registerLazySingleton(() => Dio())
     ..registerLazySingleton(() => ApiService(getIt()))
     ..registerLazySingleton(() => WeatherRemoteDataSourceImpl(getIt()))
-    ..registerLazySingleton(() => WeatherRepositoryImpl(getIt()))
+    ..registerLazySingleton(
+        () => WeatherRepositoryImpl(getIt<WeatherRemoteDataSourceImpl>()))
     ..registerLazySingleton(() => LocationService())
     ..registerLazySingleton(() => WeatherPredictionDataSourceImpl(getIt()))
-    ..registerLazySingleton(() => WeatherPredictionRepositoryImpl(getIt()));
+    ..registerLazySingleton(() => WeatherPredictionRepositoryImpl(
+        getIt<WeatherPredictionDataSourceImpl>()));
 }
