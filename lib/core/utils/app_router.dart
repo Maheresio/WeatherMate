@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weather_mate/features/splash/splash_view.dart';
 
 import '../../features/auth/presentation/view/login/login_view.dart';
 import '../../features/auth/presentation/view/register/register_view.dart';
@@ -16,7 +17,7 @@ abstract class AppRouter {
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return const HomeView();
+          return const SplashView();
         },
       ),
       GoRoute(
@@ -49,6 +50,30 @@ abstract class AppRouter {
                   child: const LoginView(),
                   dx: 1.0,
                 );
+        },
+      ),
+      GoRoute(
+        path: kLogin,
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: const LoginView(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOut;
+
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+          );
         },
       ),
     ],
