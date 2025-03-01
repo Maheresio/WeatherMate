@@ -1,21 +1,20 @@
-<<<<<<< HEAD
-# WeatherMate
-=======
-# weather_mate
+### **WeatherMate: Real-Time Weather App**
+**Technologies**: Flutter, Dart, Clean Architecture, Dio, Geolocator, GetIt, State Management (Cubit).  
+**APIs**: WeatherAPI.com  
 
-A new Flutter project.
+**Description**:  
+WeatherMate is a **real-time weather application** built using **Flutter** and follows **Clean Architecture** for modularity and scalability. The app provides accurate weather forecasts based on the user's current location or a custom search query. Key features include:  
 
-## Getting Started
+- **Clean Architecture**: Separation of concerns into **Presentation**, **Domain**, and **Data layers** for maintainability and testability.  
+- **State Management**: Uses **Cubit** for efficient state management and reactive UI updates.  
+- **API Integration**: Fetches weather data from **WeatherAPI.com** using **Dio** for network requests.  
+- **Location Services**: Utilizes the **Geolocator** package to fetch the user's current location with permission handling.  
+- **Error Handling**: Implements robust error handling using **Either<Failure, T>** for graceful failure states.  
+- **Responsive UI**: Features a clean and intuitive user interface with dynamic weather animations and smooth transitions.  
 
-This project is a starting point for a Flutter application.
+**Key Achievements**:  
+- Designed a scalable and maintainable architecture using Clean Architecture principles.  
+- Integrated third-party APIs and location services for real-time weather updates.  
+- Implemented efficient state management and error handling for a seamless user experience.  
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> 1390eb4 (Initial Commit)
-# WeatherMate
+---
