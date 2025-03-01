@@ -1,6 +1,5 @@
 import '../../../../../core/helpers/format_day.dart';
 import '../../../domain/entity/weather_entity.dart';
-
 import 'current.dart';
 import 'forecast.dart';
 import 'location.dart';

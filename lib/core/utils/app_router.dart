@@ -4,7 +4,6 @@ import 'package:weather_mate/features/splash/splash_view.dart';
 
 import '../../features/auth/presentation/view/login/login_view.dart';
 import '../../features/auth/presentation/view/register/register_view.dart';
-import '../../features/home/presentation/view/home_view.dart';
 import '../helpers/vertical_and_horizontal_transitions.dart';
 
 abstract class AppRouter {

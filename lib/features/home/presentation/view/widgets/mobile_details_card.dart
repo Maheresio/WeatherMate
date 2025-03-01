@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/widgets/styled_error_widget.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'details_card_info.dart';
 

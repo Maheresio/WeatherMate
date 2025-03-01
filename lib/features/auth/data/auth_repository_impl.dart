@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/error/failure.dart';
+import '../../../core/error/handle_errors.dart';
 import '../domain/entity/user_entity.dart';
 import '../domain/repository/auth_repository.dart';
-
-import '../../../core/error/handle_errors.dart';
 import 'firebase_auth_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

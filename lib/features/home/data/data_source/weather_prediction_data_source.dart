@@ -7,7 +7,7 @@ abstract class WeatherPredictionDataSource {
 class WeatherPredictionDataSourceImpl implements WeatherPredictionDataSource {
   final Dio dio;
 
-  WeatherPredictionDataSourceImpl( this.dio);
+  WeatherPredictionDataSourceImpl(this.dio);
 
   @override
   Future<int> getWeatherPrediction(List<int> features) async {
