@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_colors.dart';
@@ -25,7 +26,7 @@ class TodayForecastItem extends StatelessWidget {
             color: AppColors.lightWhiteColor,
           ),
         ),
-        Image.network(imageUrl),
+        CachedNetworkImage(imageUrl: imageUrl),
         Text(
           '$temperature°',
           style: AppStyles.textStyleBold30(context).copyWith(

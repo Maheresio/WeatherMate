@@ -5,10 +5,16 @@ abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
 
-class AuthSuccess extends AuthState {
+class LoginSuccess extends AuthState {
   final UserEntity user;
 
-  AuthSuccess(this.user);
+  LoginSuccess(this.user);
+}
+
+class RegisterSuccess extends AuthState {
+  final UserEntity user;
+
+  RegisterSuccess(this.user);
 }
 
 class AuthLoading extends AuthState {}

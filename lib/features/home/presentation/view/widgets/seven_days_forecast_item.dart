@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_colors.dart';
@@ -32,7 +33,7 @@ class SevenDaysForecastItem extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              Image.network(imageUrl),
+              CachedNetworkImage(imageUrl: imageUrl),
               const SizedBox(width: 8.0),
               Text(
                 weatherCondition,

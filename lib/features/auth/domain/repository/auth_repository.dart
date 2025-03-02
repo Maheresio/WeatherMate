@@ -20,4 +20,6 @@ abstract class AuthRepository {
   Future<Either<Failure, UserEntity?>> getCachedUser();
 
   Future<Either<Failure, String>> refreshToken();
+
+  Future<bool> isUserAuthenticated();
 }

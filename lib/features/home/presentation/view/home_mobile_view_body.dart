@@ -19,7 +19,7 @@ class HomeMobileViewBody extends StatelessWidget {
             children: [
               SearchTextField(),
               MobileHeaderSection(),
-              MobileDetailscard(),
+              MobileDetailsCard(),
               MobileForecastSection()
             ],
           ),

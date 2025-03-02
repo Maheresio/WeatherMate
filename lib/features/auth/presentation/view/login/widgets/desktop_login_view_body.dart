@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'login_card.dart';
-import 'login_form.dart';
 
 import '../../../../../../core/utils/app_constants.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import 'login_card.dart';
+import 'login_form.dart';
 
 class DesktopLoginViewBody extends StatelessWidget {
   const DesktopLoginViewBody({super.key});

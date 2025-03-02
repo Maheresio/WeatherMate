@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_mate/features/home/presentation/view/widgets/mobile_shimmers.dart';
 
 import '../../../../../core/helpers/format_day.dart';
 import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 
@@ -15,8 +16,7 @@ class MobileHeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is WeatherFailed) {
           return StyledErrorWidget(
@@ -44,8 +44,8 @@ class MobileHeaderSection extends StatelessWidget {
               const SizedBox(height: 12),
 
               // Weather Icon
-              Image.network(
-                state.weather.weatherConditionIcon,
+              CachedNetworkImage(
+                imageUrl: state.weather.weatherConditionIcon,
                 scale: .45,
               ),
 
@@ -67,7 +67,7 @@ class MobileHeaderSection extends StatelessWidget {
           );
         }
 
-        return const StyledCircularProgressIndicator();
+        return const MobileMainWeatherShimmer();
       },
     );
   }

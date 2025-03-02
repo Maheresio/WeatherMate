@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/search_text_field.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/seven_days_forecast_section.dart';
 
 import 'widgets/air_conditions_section.dart';
 import 'widgets/desktop_header_section.dart';
+import 'widgets/search_text_field.dart';
+import 'widgets/seven_days_forecast_section.dart';
 import 'widgets/today_forecast_section.dart';
 
 class HomeDesktopViewBody extends StatelessWidget {

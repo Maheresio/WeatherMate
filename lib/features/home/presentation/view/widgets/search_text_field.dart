@@ -35,6 +35,7 @@ class SearchTextFieldState extends State<SearchTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<WeatherCubit>();
     return Row(
       children: [
         Expanded(
@@ -44,13 +45,15 @@ class SearchTextFieldState extends State<SearchTextField> {
             onTap: () {
               _handleTap();
               if (_controller.text.isNotEmpty) {
-                context.read<WeatherCubit>().getWeather(_controller.text);
+                cubit.getWeather(_controller.text);
+                cubit.setPosition = _controller.text;
               }
               _controller.clear();
             },
             onSubmitted: (value) {
               if (_controller.text.isNotEmpty) {
-                context.read<WeatherCubit>().getWeather(_controller.text);
+                cubit.getWeather(_controller.text);
+                cubit.setPosition = _controller.text;
 
                 _controller.clear();
               }
@@ -64,14 +67,16 @@ class SearchTextFieldState extends State<SearchTextField> {
               showStyledSnackBar(context, state.message);
             }
             if (state is LocationSuccess) {
-              context.read<WeatherCubit>().getWeather(
+              cubit.getWeather(
                   '${state.position.latitude},${state.position.longitude}');
+              cubit.setPosition =
+                  '${state.position.latitude},${state.position.longitude}';
               _controller.clear();
             }
           },
           builder: (context, state) {
             if (state is LocationLoading) {
-              return const StyledCircularProgressIndicator();
+              return const StyledLoading();
             }
             return Container(
               decoration: BoxDecoration(

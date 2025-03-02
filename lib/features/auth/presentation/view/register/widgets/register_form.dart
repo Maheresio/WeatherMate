@@ -64,13 +64,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 showStyledSnackBar(context, state.message);
               }
 
-              if (state is AuthSuccess) {
+              if (state is RegisterSuccess) {
                 GoRouter.of(context).go(AppRouter.kLogin);
               }
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return const StyledCircularProgressIndicator();
+                return const StyledLoading();
               }
 
               return AuthButton(

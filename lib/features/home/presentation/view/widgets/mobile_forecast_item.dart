@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_colors.dart';
@@ -24,23 +25,23 @@ class MobileForecastItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 time,
-                style: AppStyles.textStyle13(context).copyWith(
+                style: AppStyles.textStyleBold18(context).copyWith(
                   color: Colors.white54,
                 ),
               ),
-              Image.network(
-                imageUrl,
-                scale: 1.5,
+              CachedNetworkImage(
+                imageUrl: imageUrl,
+                scale: 1.1,
               ),
               Text(
                 '$temperature°',
-                style: AppStyles.textStyle13(context).copyWith(
+                style: AppStyles.textStyleBold18(context).copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),

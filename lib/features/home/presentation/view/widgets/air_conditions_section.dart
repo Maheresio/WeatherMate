@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'air_condition_item.dart';
+import 'tablet_shimmers.dart';
 
 class AirConditionsSection extends StatelessWidget {
   const AirConditionsSection({
@@ -17,8 +17,7 @@ class AirConditionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is WeatherFailed) {
           return StyledErrorWidget(
@@ -88,7 +87,7 @@ class AirConditionsSection extends StatelessWidget {
           );
         }
 
-        return const StyledCircularProgressIndicator();
+        return const TabletAirConditionsShimmer();
       },
     );
   }
