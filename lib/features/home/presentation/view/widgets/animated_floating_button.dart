@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:weather_mate/core/helpers/styled_dialog.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
-
-import 'package:weather_mate/features/home/presentation/controller/weather/prediction_cubit.dart';
-import 'package:weather_mate/features/home/presentation/controller/weather/weather_cubit.dart';
+import '../../../../../core/helpers/styled_dialog.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../controller/weather/prediction_cubit.dart';
+import '../../controller/weather/weather_cubit.dart';
 
 class AnimatedFloatingButton extends StatefulWidget {
   const AnimatedFloatingButton({super.key});

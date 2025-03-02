@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_mate/core/widgets/styled_circular_progress_indicator.dart';
 
 import 'core/utils/service_locator.dart';
+import 'core/widgets/styled_circular_progress_indicator.dart';
 import 'features/auth/data/auth_repository_impl.dart';
 import 'features/auth/presentation/view/login/login_view.dart';
 import 'features/home/presentation/view/home_view.dart';
@@ -33,6 +33,7 @@ class AuthCheckerView extends StatelessWidget {
         }
 
         if (snapshot.data == true) {
+          
           return const HomeView();
         }
 

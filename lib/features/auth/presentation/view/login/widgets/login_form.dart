@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_mate/core/utils/app_router.dart';
+import '../../../../../../core/utils/app_router.dart';
 
 import '../../../../../../core/helpers/styled_snackbar.dart';
 import '../../../../../../core/utils/app_strings.dart';

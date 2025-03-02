@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
+
+import '../utils/app_colors.dart';
 
 class StyledLoading extends StatelessWidget {
   const StyledLoading({

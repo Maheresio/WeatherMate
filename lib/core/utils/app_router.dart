@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:weather_mate/features/home/presentation/view/home_view.dart';
+import '../../features/home/presentation/view/home_view.dart';
 
 import '../../auth_checker_view.dart';
 import '../../features/auth/presentation/view/login/login_view.dart';

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:weather_mate/features/home/domain/usecases/get_weather_prediction_usecase.dart';
+import '../../../domain/usecases/get_weather_prediction_usecase.dart';
 
 part 'prediction_state.dart';
 

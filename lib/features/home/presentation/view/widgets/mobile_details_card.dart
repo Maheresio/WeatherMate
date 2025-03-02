@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/mobile_shimmers.dart';
+import 'mobile_shimmers.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';

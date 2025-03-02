@@ -11,14 +11,13 @@ import 'core/utils/service_locator.dart';
 import 'features/auth/data/auth_repository_impl.dart';
 import 'features/auth/presentation/controller/auth_cubit.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   styledStatusBar();
 
   await firebaseInit();
   setupServiceLocator();
-
+  
 
   runApp(
     DevicePreview(

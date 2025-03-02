@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
 import '../../../domain/entity/weather_entity.dart';
 import '../../../domain/usecases/get_weather_usecase.dart';
 

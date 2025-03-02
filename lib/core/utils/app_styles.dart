@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart' show AppColors;
 
+import 'app_colors.dart' show AppColors;
 import 'size_config.dart';
 
 abstract class AppStyles {

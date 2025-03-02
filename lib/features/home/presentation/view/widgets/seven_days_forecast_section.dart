@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/desktop_shimmers.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
+import 'desktop_shimmers.dart';
 import 'seven_days_forecast_item.dart';
 
 class SevenDaysForecastSection extends StatelessWidget {

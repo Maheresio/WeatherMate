@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../core/utils/app_colors.dart';
 import 'splash_view_body.dart';
 

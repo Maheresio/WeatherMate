@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/tablet_shimmers.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
-import '../../../../../core/widgets/styled_error_widget.dart';
-import '../../controller/weather/weather_cubit.dart';
-import 'today_forecast_item.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
+import '../../controller/weather/weather_cubit.dart';
+import 'tablet_shimmers.dart';
+import 'today_forecast_item.dart';
 
 class TodayForecastSection extends StatelessWidget {
   const TodayForecastSection({

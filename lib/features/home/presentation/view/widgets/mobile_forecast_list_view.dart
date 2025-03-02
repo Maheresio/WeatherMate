@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_mate/features/home/presentation/view/widgets/mobile_shimmers.dart';
 
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import '../../controller/weather/weather_provider.dart';
 import 'mobile_forecast_item.dart';
+import 'mobile_shimmers.dart';
 
 class MobileForecastListView extends StatelessWidget {
   const MobileForecastListView({

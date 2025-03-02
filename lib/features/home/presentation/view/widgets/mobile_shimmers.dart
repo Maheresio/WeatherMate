@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:weather_mate/core/utils/app_colors.dart';
+import '../../../../../core/utils/app_colors.dart';
 
 class SearchBarShimmer extends StatelessWidget {
   const SearchBarShimmer({super.key});
