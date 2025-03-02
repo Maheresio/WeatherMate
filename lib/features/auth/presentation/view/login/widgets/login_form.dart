@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:weather_mate/core/utils/app_router.dart';
 
 import '../../../../../../core/helpers/styled_snackbar.dart';
 import '../../../../../../core/utils/app_strings.dart';
@@ -57,13 +59,15 @@ class _LoginFormState extends State<LoginForm> {
                 showStyledSnackBar(context, state.message);
               }
 
-              if (state is AuthSuccess) {}
+              if (state is LoginSuccess) {
+                GoRouter.of(context).pushReplacement(AppRouter.kHome);
+              }
             },
             builder: (context, state) {
               if (state is AuthLoading) {
                 return const StyledCircularProgressIndicator();
               }
-              if (state is AuthSuccess) {
+              if (state is LoginSuccess) {
                 return Center(
                   child: Text(
                     'Success',

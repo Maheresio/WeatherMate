@@ -64,7 +64,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 showStyledSnackBar(context, state.message);
               }
 
-              if (state is AuthSuccess) {
+              if (state is RegisterSuccess) {
                 GoRouter.of(context).go(AppRouter.kLogin);
               }
             },
