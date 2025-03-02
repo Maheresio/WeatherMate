@@ -18,8 +18,9 @@ void setupServiceLocator() {
     ..registerLazySingleton(
         () => AuthRepositoryImpl(getIt<FirebaseAuthDataSourceImpl>()))
     ..registerLazySingleton(() => Dio())
-    ..registerLazySingleton(() => ApiService(getIt()))
-    ..registerLazySingleton(() => WeatherRemoteDataSourceImpl(getIt()))
+    ..registerLazySingleton(() => ApiService(getIt<Dio>()))
+    ..registerLazySingleton(
+        () => WeatherRemoteDataSourceImpl(getIt<ApiService>()))
     ..registerLazySingleton(
         () => WeatherRepositoryImpl(getIt<WeatherRemoteDataSourceImpl>()))
     ..registerLazySingleton(() => LocationService())
