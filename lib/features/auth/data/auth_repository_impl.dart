@@ -112,8 +112,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final prefs = await _initSharedPreferences();
       await prefs.setString('userEmail', user.email!);
       await prefs.setString('idToken', user.idToken!);
-    } on Exception catch (e) {
-      print('Error caching user: $e');
+    // ignore: empty_catches
+    } on Exception {
     }
   }
 
@@ -122,8 +122,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final prefs = await _initSharedPreferences();
       await prefs.remove('userEmail');
       await prefs.remove('idToken');
-    } on Exception catch (e) {
-      print('Error clearing cache: $e');
+    // ignore: empty_catches
+    } on Exception  {
     }
   }
 }

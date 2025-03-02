@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_mate/features/home/presentation/view/widgets/tablet_shimmers.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
@@ -17,8 +18,7 @@ class AirConditionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WeatherCubit, WeatherState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is WeatherFailed) {
           return StyledErrorWidget(
@@ -88,7 +88,7 @@ class AirConditionsSection extends StatelessWidget {
           );
         }
 
-        return const StyledCircularProgressIndicator();
+        return const TabletAirConditionsShimmer();
       },
     );
   }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_mate/features/home/presentation/view/widgets/mobile_shimmers.dart';
 
 import '../../../../../core/utils/app_strings.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import '../../controller/weather/weather_provider.dart';
@@ -15,20 +16,17 @@ class MobileForecastListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<WeatherProvider>();
-    return SizedBox(
-      height: 120,
-      child: BlocConsumer<WeatherCubit, WeatherState>(
-        listener: (context, state) {
-        },
-        builder: (context, state) {
-          if (state is WeatherFailed) {
-            return StyledErrorWidget(
-              message: state.message,
-            );
-          }
+    return BlocConsumer<WeatherCubit, WeatherState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is WeatherFailed) {
+          return StyledErrorWidget(
+            message: state.message,
+          );
+        }
 
-          if (state is WeatherSuccess) {
+        if (state is WeatherSuccess) {
+          return Consumer<WeatherProvider>(builder: (context, provider, child) {
             return provider.activeTab == AppStrings.today
                 ? ListView(
                     physics: const BouncingScrollPhysics(),
@@ -62,11 +60,11 @@ class MobileForecastListView extends StatelessWidget {
                       ),
                     ],
                   );
-          }
+          });
+        }
 
-          return const StyledCircularProgressIndicator();
-        },
-      ),
+        return const MobileHourlyForecastShimmer();
+      },
     );
   }
 }

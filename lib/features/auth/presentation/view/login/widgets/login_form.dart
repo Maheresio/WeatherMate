@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return const StyledCircularProgressIndicator();
+                return const StyledLoading();
               }
               if (state is LoginSuccess) {
                 return Center(

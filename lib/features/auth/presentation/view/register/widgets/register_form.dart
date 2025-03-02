@@ -70,7 +70,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
             builder: (context, state) {
               if (state is AuthLoading) {
-                return const StyledCircularProgressIndicator();
+                return const StyledLoading();
               }
 
               return AuthButton(

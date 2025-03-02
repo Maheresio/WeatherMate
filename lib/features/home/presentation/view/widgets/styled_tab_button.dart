@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/utils/app_styles.dart';
 import '../../controller/weather/weather_provider.dart';
-
 
 class StyledTabButton extends StatelessWidget {
   const StyledTabButton({
@@ -15,15 +14,16 @@ class StyledTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<WeatherProvider>();
-    return TextButton(
-      child: Text(
-        title,
-        style: AppStyles.textStyleBold18(context).copyWith(
-          color: provider.activeTab == title ? Colors.white : Colors.white54,
+    return Consumer<WeatherProvider>(
+      builder: (context, provider, child) => TextButton(
+        child: Text(
+          title,
+          style: AppStyles.textStyleBold18(context).copyWith(
+            color: provider.activeTab == title ? Colors.white : Colors.white54,
+          ),
         ),
+        onPressed: () => provider.setActiveTab(title),
       ),
-      onPressed: () => provider.setActiveTab(title),
     );
   }
 }

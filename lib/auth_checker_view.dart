@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_mate/core/widgets/styled_circular_progress_indicator.dart';
 
 import 'core/utils/service_locator.dart';
 import 'features/auth/data/auth_repository_impl.dart';
@@ -18,7 +19,7 @@ class AuthCheckerView extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: StyledLoading(),
             ),
           );
         }

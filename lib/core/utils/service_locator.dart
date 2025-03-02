@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:weather_mate/features/home/domain/usecases/get_weather_prediction_usecase.dart';
+import 'package:weather_mate/features/home/domain/usecases/get_weather_usecase.dart';
 
 import '../../features/auth/data/auth_repository_impl.dart';
 import '../../features/auth/data/firebase_auth_data_source.dart';
@@ -26,5 +28,10 @@ void setupServiceLocator() {
     ..registerLazySingleton(() => LocationService())
     ..registerLazySingleton(() => WeatherPredictionDataSourceImpl(getIt()))
     ..registerLazySingleton(() => WeatherPredictionRepositoryImpl(
-        getIt<WeatherPredictionDataSourceImpl>()));
+        getIt<WeatherPredictionDataSourceImpl>()))
+    ..registerLazySingleton(() => GetWeatherPredictionUsecase(
+        weatherRepository: getIt<WeatherRepositoryImpl>(),
+        weatherPredictionRepository: getIt<WeatherPredictionRepositoryImpl>()))
+    ..registerLazySingleton(
+        () => GetWeatherUsecase(getIt<WeatherRepositoryImpl>()));
 }

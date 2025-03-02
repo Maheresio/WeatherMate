@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:weather_mate/features/home/presentation/view/home_view.dart';
+
 import '../../auth_checker_view.dart';
 import '../../features/auth/presentation/view/login/login_view.dart';
 import '../../features/auth/presentation/view/register/register_view.dart';
@@ -26,6 +28,12 @@ abstract class AppRouter {
         path: kCheckAuth,
         builder: (BuildContext context, GoRouterState state) {
           return const AuthCheckerView();
+        },
+      ),
+      GoRoute(
+        path: kHome,
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomeView();
         },
       ),
       GoRoute(
