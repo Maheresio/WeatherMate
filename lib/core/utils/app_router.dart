@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_mate/features/splash/splash_view.dart';
 
+import '../../auth_checker_view.dart';
 import '../../features/auth/presentation/view/login/login_view.dart';
 import '../../features/auth/presentation/view/register/register_view.dart';
+import '../../features/splash/splash_view.dart';
 import '../helpers/vertical_and_horizontal_transitions.dart';
 
 abstract class AppRouter {
@@ -11,6 +12,7 @@ abstract class AppRouter {
   static const kLogin = '/loginView';
   static const kRegister = '/registerView';
   static const kHome = '/homeView';
+  static const kCheckAuth = '/checkAuth';
 
   static GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -18,6 +20,12 @@ abstract class AppRouter {
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
           return const SplashView();
+        },
+      ),
+      GoRoute(
+        path: kCheckAuth,
+        builder: (BuildContext context, GoRouterState state) {
+          return const AuthCheckerView();
         },
       ),
       GoRoute(
