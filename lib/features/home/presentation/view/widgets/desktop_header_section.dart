@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'tablet_shimmers.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
 import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 
@@ -59,15 +60,21 @@ class DesktopHeaderSection extends StatelessWidget {
                     ),
                   ],
                 ),
-                Image.network(
-                  state.weather.weatherConditionIcon,
+                CachedNetworkImage(
+                  imageUrl: state.weather.weatherConditionIcon,
                   scale: .4,
                 )
               ],
             ),
           );
         }
-        return const StyledCircularProgressIndicator();
+        return const Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 12,
+          ),
+          child: TabletHeaderShimmer(),
+        );
       },
     );
   }

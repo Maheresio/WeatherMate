@@ -59,3 +59,4 @@ class DailyForecast {
     required this.iconUrl,
   });
 }
+
