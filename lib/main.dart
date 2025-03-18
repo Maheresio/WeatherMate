@@ -18,7 +18,6 @@ Future<void> main() async {
   await firebaseInit();
   setupServiceLocator();
   
-
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
