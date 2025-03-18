@@ -1,19 +1,21 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/error/failure.dart';
+import '../../../core/error/handle_errors.dart';
 import '../domain/entity/user_entity.dart';
 import '../domain/repository/auth_repository.dart';
-
-import '../../../core/error/handle_errors.dart';
 import 'firebase_auth_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthDataSource firebaseAuthDataSource;
-  late final SharedPreferences prefs;
 
-  AuthRepositoryImpl(
-    this.firebaseAuthDataSource,
-  );
+  AuthRepositoryImpl(this.firebaseAuthDataSource);
+
+  Future<SharedPreferences> _initSharedPreferences() async {
+    return await SharedPreferences.getInstance();
+  }
 
   @override
   Future<Either<Failure, UserEntity>> loginWithEmailAndPassword(
@@ -41,6 +43,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
         username: username,
       );
+      await _cacheUser(user);
 
       return Right(user);
     } catch (e) {
@@ -50,8 +53,22 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<bool> isUserAuthenticated() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String? token = await user.getIdToken();
+      return token != null;
+    }
+    return false;
+  }
+
+  Stream<User?> get authStateChanges =>
+      FirebaseAuth.instance.authStateChanges();
+
+  @override
   Future<Either<Failure, UserEntity?>> getCachedUser() async {
     try {
+      final prefs = await _initSharedPreferences();
       final email = prefs.getString('userEmail');
       final idToken = prefs.getString('idToken');
       if (email != null && idToken != null) {
@@ -67,6 +84,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, String>> refreshToken() async {
     try {
+      final prefs = await _initSharedPreferences();
       final newToken = await firebaseAuthDataSource.refreshToken();
       await prefs.setString('idToken', newToken);
       return Right(newToken);
@@ -90,12 +108,22 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   Future<void> _cacheUser(UserEntity user) async {
-    await prefs.setString('userEmail', user.email!);
-    await prefs.setString('idToken', user.idToken!);
+    try {
+      final prefs = await _initSharedPreferences();
+      await prefs.setString('userEmail', user.email!);
+      await prefs.setString('idToken', user.idToken!);
+    // ignore: empty_catches
+    } on Exception {
+    }
   }
 
   Future<void> _clearCache() async {
-    await prefs.remove('userEmail');
-    await prefs.remove('idToken');
+    try {
+      final prefs = await _initSharedPreferences();
+      await prefs.remove('userEmail');
+      await prefs.remove('idToken');
+    // ignore: empty_catches
+    } on Exception  {
+    }
   }
 }

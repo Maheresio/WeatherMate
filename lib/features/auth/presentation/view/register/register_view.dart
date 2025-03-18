@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/auth_adaptive_layout.dart';
 import 'widgets/desktop_register_view_body.dart';
 import 'widgets/mobile_register_view_body.dart';

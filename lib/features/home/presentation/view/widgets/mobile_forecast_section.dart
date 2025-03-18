@@ -10,12 +10,14 @@ class MobileForecastSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        MobileForecastTabView(),
-        SizedBox(height: 10),
-        MobileForecastListView()
+        const MobileForecastTabView(),
+        const SizedBox(height: 10),
+        SizedBox(
+            height: MediaQuery.sizeOf(context).height*.21,
+            child: const MobileForecastListView())
       ],
     );
   }

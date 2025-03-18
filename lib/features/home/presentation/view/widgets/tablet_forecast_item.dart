@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_colors.dart';
@@ -24,7 +25,7 @@ class TabletForecastItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -34,12 +35,12 @@ class TabletForecastItem extends StatelessWidget {
                   color: Colors.white54,
                 ),
               ),
-              Image.network(
-                imageUrl,
-                scale: .8,
+              CachedNetworkImage(
+                imageUrl: imageUrl,
+                scale: .7,
               ),
               Text(
-                '$temperature°',
+                '$temperature °',
                 style: AppStyles.textStyleBold18(context).copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

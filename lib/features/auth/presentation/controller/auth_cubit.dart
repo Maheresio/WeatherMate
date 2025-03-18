@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       (failure) {
         emit(AuthFailure(failure.message));
       },
-      (user) => emit(AuthSuccess(user)),
+      (user) => emit(LoginSuccess(user)),
     );
   }
 
@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
         .execute(email: email, password: password, username: username);
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),
-      (user) => emit(AuthSuccess(user)),
+      (user) => emit(RegisterSuccess(user)),
     );
   }
 
@@ -64,7 +64,6 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (user) {
         if (user != null) {
-          emit(AuthSuccess(user));
         } else {
           emit(AuthUnauthenticated());
         }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/widgets/styled_error_widget.dart';
+import 'mobile_shimmers.dart';
 
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/widgets/styled_circular_progress_indicator.dart';
+import '../../../../../core/widgets/styled_error_widget.dart';
 import '../../controller/weather/weather_cubit.dart';
 import 'details_card_info.dart';
 
-class MobileDetailscard extends StatelessWidget {
-  const MobileDetailscard({
+class MobileDetailsCard extends StatelessWidget {
+  const MobileDetailsCard({
     super.key,
   });
 
@@ -57,7 +57,7 @@ class MobileDetailscard extends StatelessWidget {
             message: state.message,
           );
         }
-        return const StyledCircularProgressIndicator();
+        return const MobileDetailsCardShimmer();
       },
     );
   }
