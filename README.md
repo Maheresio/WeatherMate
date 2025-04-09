@@ -1,3 +1,5 @@
+Here's your updated README with the AI model hosting instructions added under a new "AI Model Integration" section:
+
 # WeatherMate - Flutter Weather Application 🌦️✨
 
 ![Weather Banner](banner.png)
@@ -74,6 +76,32 @@ flutter pub get
 3. Run the app
 ```bash
 flutter run
+```
+
+## 🤖 AI Model Integration
+
+To host the AI model locally:
+
+1. Run these commands in your terminal:
+```bash
+python3 -m venv venv
+source venv/bin/activate  # MAC
+source venv/Scripts/activate  # Windows
+pip install Flask
+pip show Flask
+pip install numpy
+pip install scikit-learn==1.3.2
+python app.py
+```
+
+2. Verify the model is running by visiting:
+```
+http://127.0.0.1:5001
+```
+
+3. In your Flutter app, send POST requests to:
+```
+http://10.0.2.2:5001/predict
 ```
 
 ## 🤝 Technology Stack & Dependencies
