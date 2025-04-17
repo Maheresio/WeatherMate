@@ -19,7 +19,7 @@ Here's your updated README with the AI model hosting instructions added under a 
   <img src="6.png" width="400" />
 </p>
 
-## 🚀 Project Overview
+##  Project Overview
 
 WeatherMate is a Flutter-based application that provides users with real-time weather information based on their current location or a custom search query. The app fetches data from **WeatherAPI** and displays detailed weather forecasts, including current weather, hourly forecasts, and 7-day forecasts. Users can also get AI-powered weather predictions and enjoy a seamless user experience.
 
